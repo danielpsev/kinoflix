@@ -1,0 +1,148 @@
+
+.Banner{
+    width: 100%;
+    height: 250px;
+    background-image: url(../../assets/images/kinoflix_banner5.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.MainTopContainer{
+    /* margin-top: 20px; */
+}
+.searchInput:focus{
+    border: 2px solid var(--acc-color);
+}
+.searchInput{
+    padding: 15px;
+    /* padding-bottom: 15px; */
+    border: 2px solid var(--border-color);
+}
+
+
+.FiltersContainer{
+    padding: 25px 0px;
+  }
+  .FilterDropdown:focus{
+    border: 2px solid var(--acc-color);
+  }
+  .FilterDropdown{
+    position: relative;
+    width: 200px;
+    padding: 15px;
+    border: unset;
+    outline: unset;
+    color: #eee;
+    border-radius: 5px;
+    background-color: unset;
+    border: 2px solid var(--border-color);
+    appearance: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .FilterDropdown option{
+    padding: 10px;
+    background-color:  var(--border-color);
+  }
+
+.FilmListContainer{
+    margin-top: 20px;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* gap: 20px; */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* grid-auto-rows: 200px; */
+    grid-gap: 10px;
+}
+.MainFilmContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 250px;
+    border: 1px solid var(--border-color);
+    background-color: var(--body-bg);
+}
+.MainFilmContainer__img{
+    width: 100%;
+    object-fit: cover;
+    height: 328px;
+}
+.MainFilmContainer__infoContainer{
+    position: relative;
+    border-top: 1px solid var(--border-color);
+    padding: 15px 30px 15px 15px;
+}
+.MainFilmContainer__infoContainer__title{
+    font-size: 1.2em;
+    padding-right: 15px;
+    color: var(--text-color__title);
+}
+.MainFilmContainer__infoContainer__details{
+    margin-top: 10px;
+    color: var(--text-color__second);
+    font-size: 0.75em;
+}
+
+.MainFilmContainer__infoContainer__heart{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2em;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.filledHeart{
+    color: #eb3434;
+}
+.notFilledHeart{
+    color: var(--border-color);
+}
+.notFilledHeart:hover{
+    color: #eb3434;
+}
+.MainFilmContainer__overlay{
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    bottom:0;
+    width: 100%;
+    height: 328px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(23, 26, 32, 0.95);
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 0;
+}
+.MainFilmContainer__overlay__playIcon{
+    font-size: 2.5em;
+    color: var(--text-color__second);
+}
+/* .MainFilmContainer__img:hover + .MainFilmContainer__overlay{
+    display: flex;
+    opacity: 1;
+    cursor: pointer;
+} */
+.MainFilmContainer__overlay:hover{
+    opacity: 1;
+    /* display: flex; */
+}
+
+/* tablet */
+@media screen and (max-width: 1439px){
+
+}
+
+/* mobile */
+@media screen and (max-width: 767px){
+    .Banner{
+        display: none;
+    }
+    .FilmListContainer{
+        justify-items: center;
+        gap: 30px;
+    }
+}
