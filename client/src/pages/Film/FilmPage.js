@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 import FilmCSS from "./Film.module.css";
 import axios from "../../axios";
 import { useLocation } from "react-router-dom";
@@ -24,10 +25,9 @@ export default function FilmPage() {
         setFilm(res.data);
         setLike(res.data.isLiked);
         setIsLoading(false);
-        // setBg(res.data.bgSrc);
       } catch (err) {
-        // toast.error(err.response.data.mess);
-        // navigate('/');
+        toast.error(err.response.data.mess);
+        navigate('/');
       }
     };
     getFilm();
@@ -36,15 +36,15 @@ export default function FilmPage() {
     _id,
     title,
     description,
+    genres,
     country,
+    duration,
     releaseYear,
     rating,
     posterSrc,
     bgSrc,
     trailerID,
   } = film;
-
-  const [bg, setBg] = useState(bgSrc);
 
   const videoId = trailerID;
   const playerOptions = {
@@ -53,7 +53,7 @@ export default function FilmPage() {
       mute: 1,
     },
   };
-
+console.log(genres);
   return (
     <main>
       <style>
@@ -76,7 +76,6 @@ export default function FilmPage() {
               />
             ) : (
               <>
-                {" "}
                 <div className={FilmCSS.FilmCover__overlay}></div>
                 <section className={FilmCSS.FilmContainer}>
                   <div className={FilmCSS.PosterBox}>
@@ -103,10 +102,10 @@ export default function FilmPage() {
                           Išleidimo metai: <b>{releaseYear}</b>
                         </p>
                         <p className="nowrap">
-                          Žanras: <b>Fantastika</b>
+                          Žanras: <b>{genres.length > 1 ? `${genres[0]}, ${genres[1]}` : genres[0]}</b>
                         </p>
                         <p className="nowrap">
-                          Trukmė <b>2 val. 45 min.</b>
+                          Trukmė <b>{duration} min.</b>
                         </p>
                       </div>
                       {!like ? (
