@@ -1,7 +1,7 @@
 
 .Banner{
     width: 100%;
-    height: 250px;
+    height: 200px;
     background-image: url(../../assets/images/kinoflix_banner5.png);
     background-size: cover;
     background-position: center;
@@ -21,7 +21,7 @@
 
 
 .FiltersContainer{
-    padding: 25px 0px;
+    padding: 10px 0px 10px 0px;
   }
   .FilterDropdown:focus{
     border: 2px solid var(--acc-color);
@@ -46,7 +46,7 @@
   }
 
 .FilmListContainer{
-    margin-top: 20px;
+    margin-top: 10px;
     /* display: flex; */
     /* flex-wrap: wrap; */
     /* gap: 20px; */

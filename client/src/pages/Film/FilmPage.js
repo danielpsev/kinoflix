@@ -1,90 +1,146 @@
-import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
-import FilmCSS from './Film.module.css';
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import FilmCSS from "./Film.module.css";
 import axios from "../../axios";
 import { useLocation } from "react-router-dom";
-import {AiFillStar, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import {BsFillPlayCircleFill} from "react-icons/bs";
+import { AiFillStar, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { BsFillPlayCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { likeFilm, dislikeFilm } from "../../func.js";
-import YouTube from 'react-youtube';
+import BeatLoader from "react-spinners/BeatLoader";
+import YouTube from "react-youtube";
 export default function FilmPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [film, setFilm] = useState({});
   const location = useLocation();
   let path = location.pathname.split("/")[2];
   const [like, setLike] = useState(false);
   useEffect(() => {
-      const getFilm = async () => {
-        try{
-          const res = await axios.get("/films/" + path);
-          setFilm(res.data);
-          setLike(res.data.isLiked);
-          // setBg(res.data.bgSrc);
-        }catch(err){
-          // toast.error(err.response.data.mess);
-          // navigate('/');
-        }
-      }
-      getFilm();
-  }, [path]);
-  const {_id, title, description, country, releaseYear,  rating, posterSrc, bgSrc, trailerID} = film;
-
-    const [bg, setBg] = useState(bgSrc);
-
-    const videoId = trailerID;
-    const playerOptions = {
-      playerVars: {
-        autoplay: 0,
-        mute: 1
+    setIsLoading(true);
+    const getFilm = async () => {
+      try {
+        const res = await axios.get("/films/" + path);
+        setFilm(res.data);
+        setLike(res.data.isLiked);
+        setIsLoading(false);
+        // setBg(res.data.bgSrc);
+      } catch (err) {
+        // toast.error(err.response.data.mess);
+        // navigate('/');
       }
     };
+    getFilm();
+  }, [path]);
+  const {
+    _id,
+    title,
+    description,
+    country,
+    releaseYear,
+    rating,
+    posterSrc,
+    bgSrc,
+    trailerID,
+  } = film;
 
-    return (
-        <main>
+  const [bg, setBg] = useState(bgSrc);
+
+  const videoId = trailerID;
+  const playerOptions = {
+    playerVars: {
+      autoplay: 0,
+      mute: 1,
+    },
+  };
+
+  return (
+    <main>
       <style>
         {`.App::before {
           background-image: url(${bgSrc}) !important;
           background-size: cover;
         }`}
       </style>
-        <div className="wrapper">
-            <div>
-                <div className={FilmCSS.FilmCover}>
-                <div className={FilmCSS.FilmCover__overlay}>
-                </div>
-                    <section className={FilmCSS.FilmContainer}>
-                        <div className={FilmCSS.PosterBox}>
-                        <img className={FilmCSS.FilmContainer__img} alt="poster" src={posterSrc}/>
-                        <div className={FilmCSS.RatingBox}><AiFillStar className={FilmCSS.RatingBox__star}/><h3 className={FilmCSS.RatingBox__rate}>{rating}</h3></div>
-                        </div>
-                        <div className={FilmCSS.FilmContainer__RightSideContainer}>
-                            <h2 className={FilmCSS.FilmRightSideContainer__title}>{title}</h2>
-                            <p className={FilmCSS.FilmRightSideContainer__description}>{description}</p>
-                      <div className={FilmCSS.FilmRightSideContainer__detailsBox}>
-                        <div>
-                        <p className="nowrap">Išleidimo metai: <b>{releaseYear}</b></p>
-                        <p className="nowrap">Žanras: <b>Fantastika</b></p>
-                        <p className="nowrap">Trukmė <b>2 val. 45 min.</b></p>
-                        </div>
-                        {!like ? <button className={`btn btn-success ${FilmCSS.FilmRightSideContainer__detailsBtn}`} onClick={() => likeFilm(_id, setLike)}>Išsaugoti</button> : 
-                        <button className={`btn btn-error ${FilmCSS.FilmRightSideContainer__detailsBtn}`}  onClick={() => dislikeFilm(_id, setLike)}>Pašalinti</button>
-                        }
-                      </div>
-                      </div>
-                    </section>
-                    <div className={FilmCSS.FilmTrailerContainer}>
-                    <YouTube videoId={videoId} opts={playerOptions} />
+      <div className="wrapper">
+        <div>
+          <div className={FilmCSS.FilmCover}>
+            {isLoading ? (
+              <BeatLoader
+                color="#3474eb"
+                margin={15}
+                size={40}
+                cssOverride={{
+                  textAlign: "center",
+                }}
+              />
+            ) : (
+              <>
+                {" "}
+                <div className={FilmCSS.FilmCover__overlay}></div>
+                <section className={FilmCSS.FilmContainer}>
+                  <div className={FilmCSS.PosterBox}>
+                    <img
+                      className={FilmCSS.FilmContainer__img}
+                      alt="poster"
+                      src={posterSrc}
+                    />
+                    <div className={FilmCSS.RatingBox}>
+                      <AiFillStar className={FilmCSS.RatingBox__star} />
+                      <h3 className={FilmCSS.RatingBox__rate}>{rating}</h3>
                     </div>
+                  </div>
+                  <div className={FilmCSS.FilmContainer__RightSideContainer}>
+                    <h2 className={FilmCSS.FilmRightSideContainer__title}>
+                      {title}
+                    </h2>
+                    <p className={FilmCSS.FilmRightSideContainer__description}>
+                      {description}
+                    </p>
+                    <div className={FilmCSS.FilmRightSideContainer__detailsBox}>
+                      <div>
+                        <p className="nowrap">
+                          Išleidimo metai: <b>{releaseYear}</b>
+                        </p>
+                        <p className="nowrap">
+                          Žanras: <b>Fantastika</b>
+                        </p>
+                        <p className="nowrap">
+                          Trukmė <b>2 val. 45 min.</b>
+                        </p>
+                      </div>
+                      {!like ? (
+                        <button
+                          className={`btn btn-success ${FilmCSS.FilmRightSideContainer__detailsBtn}`}
+                          onClick={() => likeFilm(_id, setLike)}
+                        >
+                          Išsaugoti
+                        </button>
+                      ) : (
+                        <button
+                          className={`btn btn-error ${FilmCSS.FilmRightSideContainer__detailsBtn}`}
+                          onClick={() => dislikeFilm(_id, setLike)}
+                        >
+                          Pašalinti
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </section>
+                <div className={FilmCSS.FilmTrailerContainer}>
+                  <YouTube videoId={videoId} opts={playerOptions} />
                 </div>
-            </div>
-         </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </main>
-    );
+  );
 }
 
-
-{/* <main>
+{
+  /* <main>
 <style>
   {`.App::before {
     background-image: ${bg} !important;
@@ -94,12 +150,15 @@ export default function FilmPage() {
   <div className="wrapper">
       <div>
           <div className={FilmCSS.FilmCover}>
-          {/* <img className={FilmCSS.FilmCover__img} src="https://www.scubadivermag.com/wp-content/uploads/2019/12/avatar-2-cover.jpg" title="cover"/> */}
-          // <div className={FilmCSS.FilmCover__overlay}>
-          // </div>
-          {/* <div className="wrapper"> */}
-              // <section className={FilmCSS.FilmContainer}>
-                  // <div className={FilmCSS.PosterBox}>
+          {/* <img className={FilmCSS.FilmCover__img} src="https://www.scubadivermag.com/wp-content/uploads/2019/12/avatar-2-cover.jpg" title="cover"/> */
+}
+// <div className={FilmCSS.FilmCover__overlay}>
+// </div>
+{
+  /* <div className="wrapper"> */
+}
+// <section className={FilmCSS.FilmContainer}>
+// <div className={FilmCSS.PosterBox}>
 //                   <img className={FilmCSS.FilmContainer__img} alt="poster" src="https://www.comingsoon.net/wp-content/uploads/sites/3/2022/09/Avatar-Dolby-Poster.jpg"/>
 //                   <div className={FilmCSS.RatingBox}><AiFillStar className={FilmCSS.RatingBox__star}/><h3 className={FilmCSS.RatingBox__rate}>9.7</h3></div>
 //                   </div>
@@ -128,8 +187,10 @@ export default function FilmPage() {
 //               <YouTube videoId={videoId} opts={playerOptions} />
 //               </div>
 
-          {/* </div> */}
-  //         </div>
-  //     </div>
-  //  </div>
+{
+  /* </div> */
+}
+//         </div>
+//     </div>
+//  </div>
 // </main> */}
