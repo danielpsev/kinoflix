@@ -19,6 +19,13 @@ const filmSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        country: {
+            type : String,
+            minLength: 2,
+            maxLength: 20,
+            trim: true,
+            required: true
+        },
         genres: {
             type: Array,
             required: true 
@@ -50,11 +57,7 @@ const filmSchema = mongoose.Schema(
         director:{
             type: String,
             required: true
-        },
-        likes:{
-            type: Array
         }
-
     },
     {timestamps: true}
 );

@@ -6,24 +6,20 @@ import { v4 as uuidv4 } from "uuid";
 import ReactPaginate from "react-paginate";
 import BeatLoader from "react-spinners/BeatLoader";
 
-export default function FilmsList() {
+export default function FilmsList(props) {
+  const { getFilms, films } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-
-  const [films, setFilms] = useState([]);
-  const getFilms = async (page) => {
+  const handleFilmsChange = async (page) => {
     setIsLoading(true);
-    try {
-      const res = await axios.get(`/films?page=${page}`);
-      setFilms(res.data.data.films);
+    const res = await getFilms(page);
+    if (res) {
       setTotalPages(res.data.data.totalPages);
       setIsLoading(false);
-    } catch (err) {
-      console.log(err);
     }
   };
   useEffect(() => {
-    getFilms(1);
+    handleFilmsChange(1);
   }, []);
   let films_render = films.map((el) => {
     return <Film obj={el} key={uuidv4()} />;
@@ -31,7 +27,7 @@ export default function FilmsList() {
 
   const handlePageClick = async (data) => {
     let currPage = data.selected + 1;
-    getFilms(currPage);
+    handleFilmsChange(currPage);
   };
 
   return (
@@ -48,7 +44,13 @@ export default function FilmsList() {
       ) : null}
 
       <div className={MainCSS.FilmListContainer}>
-        {!isLoading ? films_render : null}
+        {!isLoading ? (
+          films.length > 0 ? (
+            films_render
+          ) : (
+            <p>Nerasta.</p>
+          )
+        ) : null}
       </div>
       <div className="pagination-container">
         <div className="pagination-inner">

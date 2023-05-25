@@ -17,7 +17,7 @@ exports.getAllFilms = async (req, res) => {
     }
 
     let sort = {};
-    if (sort_name === 'title' || sort_name === 'price' || sort_name === 'createdAt') {
+    if (sort_name === 'title' || sort_name === 'releaseYear' || sort_name === 'createdAt') {
       sort[sort_name] = sort_type;
     }
 
@@ -44,12 +44,10 @@ exports.getAllFilms = async (req, res) => {
     }
 
     if(req.userInfo){
-      allFilms = allFilms.map((film) => {
-        const isLiked =  film.likes.some(like => like.userID === req.userInfo.id);
-        return {
-          ...film.toObject(),
-          isLiked
-        };
+      const user = await User.findById(req.userInfo.id);
+      allFilms = allFilms.map(film => {
+        const isLiked = user.likes.some(like => like.film.toString() === film._id.toString());
+        return { ...film._doc, isLiked };
       });
     }
 
@@ -72,7 +70,7 @@ exports.getAllFilms = async (req, res) => {
 exports.getUserLikedFilms = async (req, res) => {
   const { page = 1, limit = 12} = req.query;
   try {
-    const allFilms = await User.find()
+    const likedFilms = await User.find()
       .populate({
         path: 'likes.film',
         model: "film",
@@ -82,11 +80,18 @@ exports.getUserLikedFilms = async (req, res) => {
         },
       })
       .exec();
+      const films = likedFilms
+      .map((user) =>
+        user.likes.map((like) => ({
+          ...like.film._doc,
+          isLiked: true,
+        }))
+      ).flat();
       const count = await User.countDocuments().exec();
     res.status(200).json({
       status: 'success',
       data: {
-        films: allFilms,
+        films: films,
         totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: parseInt(page)
       }
@@ -170,7 +175,8 @@ exports.getFilm = async (req, res) => {
       } else {
         let isLiked = false;
         if(req.userInfo){
-          isLiked = film.likes.some(like => like.userID === req.userInfo.id);
+          const user = await User.findById(req.userInfo.id);
+          isLiked = user.likes.some(like => like.film === id);
         }
         const { likes, ...filmData } = film._doc;
         const data = {...filmData, isLiked};
@@ -199,43 +205,39 @@ exports.likeFilm = async (req, res) => {
     if (!isValidObjectId(id)) {
       return res.status(404).json({ status: "error", mess: `Blogai nurodytas ID` });
     }
+
     const film = await Film.findById(id);
     if (!film) {
       return res.status(404).json({ mess: `Filmas, id: ${id} neegzistuoja` });
-    } else {
-
-      const user = await User.findById(req.userInfo.id);
-
-      if (!user) {
-        return res.status(404).json({
-          status: 'error',
-          message: 'Vartotojas nerastas.'
-        });
-      }
-  
-      // Check if the filmId already exists in the likes array of the user
-      const alreadyLiked = user.likes.some(like => like.film === id);
-  
-      if (alreadyLiked) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Jau patinka.'
-        });
-      }
-      try{
-        user.likes.push({film:id});
-        await user.save();
-        film.likes.push({userID: req.userInfo.id});
-        await film.save();
-        const { password, ...data } = user._doc;
-            res.json({
-              status: "success",
-              data: data,
-            });
-      } catch (error) {
-          res.status(500).json({ error: error.message });
-        }
     }
+
+    const user = await User.findById(req.userInfo.id);
+    if (!user) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Vartotojas nerastas.'
+      });
+    }
+
+    // Check if the filmId already exists in the likes array of the user
+    const userAlreadyLiked = user.likes.some((like) => like.film === id);
+
+    if (userAlreadyLiked) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Jau patinka.'
+      });
+    }
+
+    user.likes.push({ film: id });
+
+    await user.save();
+
+    const { password, ...data } = user._doc;
+    res.json({
+      status: "success",
+      data: data,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -247,6 +249,7 @@ exports.dislikeFilm = async (req, res) => {
     if (!isValidObjectId(id)) {
       return res.status(404).json({ status: "error", mess: `Blogai nurodytas ID` });
     }
+
     const film = await Film.findById(id);
     if (!film) {
       return res.status(404).json({ mess: `Filmas, id: ${id} neegzistuoja` });
@@ -272,13 +275,6 @@ exports.dislikeFilm = async (req, res) => {
     // Remove the film from the user's likes array
     user.likes.splice(likedIndex, 1);
     await user.save();
-
-    // Remove the user from the film's likes array
-    const userIndex = film.likes.findIndex(like => like.userID.toString() === req.userInfo.id);
-    if (userIndex !== -1) {
-      film.likes.splice(userIndex, 1);
-      await film.save();
-    }
 
     const { password, ...data } = user._doc;
     res.json({
