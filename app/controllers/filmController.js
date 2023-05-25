@@ -22,7 +22,7 @@ exports.getAllFilms = async (req, res) => {
     }
 
     if(!sort_name){
-      sort['createdAt'] = 'desc';
+      sort['createdAt'] = 'asc';
     }
     if (title) {
       filter_data.title = { $regex: title, $options: 'i' };
@@ -229,7 +229,7 @@ exports.likeFilm = async (req, res) => {
       });
     }
 
-    user.likes.push({ film: id });
+    user.likes.push({ film: id, likedAt: new Date()});
 
     await user.save();
 
