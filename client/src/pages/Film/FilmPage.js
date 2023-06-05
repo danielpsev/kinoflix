@@ -9,8 +9,10 @@ import { BsFillPlayCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { likeFilm, dislikeFilm } from "../../func.js";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useAuth } from "../../context/Auth";
 import YouTube from "react-youtube";
 export default function FilmPage() {
+  const auth = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [film, setFilm] = useState({});
@@ -31,7 +33,7 @@ export default function FilmPage() {
       }
     };
     getFilm();
-  }, [path]);
+  }, [path, auth.user]);
   const {
     _id,
     title,

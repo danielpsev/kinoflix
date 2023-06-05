@@ -124,7 +124,7 @@ export default function RegisterModal(props) {
                   </div>
                 ) : null}
                 <input
-                  className={`input-user-img input-with-img ${
+                  className={`input-email-img input-with-img ${
                     formik.touched.email && formik.errors.email ? "error" : ""
                   }`}
                   type="email"

@@ -53,14 +53,14 @@ export const useAuth = () => {
 export const RequireAuth = ({children}) => {
     const auth = useAuth();
     if(!auth.user){
-        return <Navigate to='/auth' replace/>
+        return <Navigate to='/' replace/>
     }
     return children;
 }
 export const RequireAdmin = ({children}) => {
   const auth = useAuth();
   if(!auth.user || auth.user.role != 'admin'){
-      return <Navigate to='/auth' replace/>
+      return <Navigate to='/' replace/>
   }
   return children;
 }

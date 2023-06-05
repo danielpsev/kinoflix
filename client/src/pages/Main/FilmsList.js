@@ -5,8 +5,9 @@ import MainCSS from "./Main.module.css";
 import { v4 as uuidv4 } from "uuid";
 import ReactPaginate from "react-paginate";
 import BeatLoader from "react-spinners/BeatLoader";
-
+import { useAuth } from "../../context/Auth";
 export default function FilmsList(props) {
+  const auth = useAuth();
   const { getFilms, films } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
@@ -20,7 +21,7 @@ export default function FilmsList(props) {
   };
   useEffect(() => {
     handleFilmsChange(1);
-  }, []);
+  }, [auth.user]);
   let films_render = films.map((el) => {
     return <Film obj={el} key={uuidv4()} />;
   });

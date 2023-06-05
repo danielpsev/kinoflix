@@ -17,7 +17,7 @@ exports.getAllFilms = async (req, res) => {
     }
 
     let sort = {};
-    if (sort_name === 'title' || sort_name === 'releaseYear' || sort_name === 'createdAt') {
+    if (sort_name === 'title' || sort_name === 'releaseYear' || sort_name === 'rating' || sort_name === 'createdAt' ) {
       sort[sort_name] = sort_type;
     }
 

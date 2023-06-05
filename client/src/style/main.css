@@ -123,6 +123,9 @@ h6{
 .disabled-filter{
     filter: grayscale(100);
 }
+.disabled-cursor{
+    cursor: not-allowed;
+}
 .pointer:hover{
     cursor: pointer;
 }
@@ -440,6 +443,9 @@ input.error:focus {
 }
 .input-user-img{
     background-image: url('../assets/images/form/user.svg');
+}
+.input-email-img{
+    background-image: url('../assets/images/form/email.svg');
 }
 .input-search-img{
     background-image: url('../assets/images/form/search.svg');
