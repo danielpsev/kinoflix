@@ -23,6 +23,14 @@
 .FiltersContainer{
     padding: 10px 0px 10px 0px;
   }
+  .SearchBtn{
+    width: 200px;
+  }
+  .FiltersContainer form{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
   .FilterDropdown:focus{
     border: 2px solid var(--acc-color);
   }
@@ -44,7 +52,11 @@
     padding: 10px;
     background-color:  var(--border-color);
   }
-
+  .FilterAscDescBtn{
+    font-size: 2em;
+    color: var(--acc-color) !important;
+    cursor: pointer;
+  }
 .FilmListContainer{
     margin-top: 10px;
     /* display: flex; */

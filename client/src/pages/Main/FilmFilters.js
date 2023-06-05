@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import MainCSS from "./Main.module.css";
+import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
 const FilmFilters = (props) => {
   const {getFilms, setFilms} = props;
   const [searchInputVal, setSearchInputVal] = useState('');
@@ -8,6 +9,7 @@ const FilmFilters = (props) => {
 
  const handleFilterValChange = (e) => {
   setSortBy(e.target.value);
+  handleFiltersChange();
  }
  const handleSearchChange = (e) => {
   setSearchInputVal(e.target.value);
@@ -47,19 +49,19 @@ const FilmFilters = (props) => {
             <option value='rating'>Reitingą</option>
           </select>
           {order === 'desc' ? (
-  <span onClick={() => { setOrder('asc'); handleFiltersChange(); }}>asc</span>
+  <span onClick={() => { setOrder('asc'); handleFiltersChange(); }}><AiOutlineSortDescending className={MainCSS.FilterAscDescBtn}/></span>
 ) : (
-  <span onClick={() => { setOrder('desc'); handleFiltersChange(); }}>desc</span>
+  <span onClick={() => { setOrder('desc'); handleFiltersChange(); }}><AiOutlineSortAscending className={MainCSS.FilterAscDescBtn}/></span>
 )}          <input
             type="text"
             className={`${MainCSS.searchInput}`}
             name="search"
-            placeholder="Ieškoti..."
+            placeholder="Paieška..."
             onChange={handleSearchChange}
             value={searchInputVal}
           />
-          <button type="submit" onClick={() => onSubmit}>Ieškoti</button>
-          { sortBy || searchInputVal ? <button type="button" onClick={() => resetFilters()}>reset</button> : null}
+          <button type="submit" className={`${MainCSS.SearchBtn} btn btn-success`} onClick={() => onSubmit}>Ieškoti</button>
+          { sortBy || searchInputVal ? <button type="button" className={`btn btn-error`} onClick={() => resetFilters()}>Atstatyti</button> : null}
         </form>
       </div>
     </div>

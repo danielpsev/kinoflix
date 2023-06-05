@@ -22,7 +22,7 @@ exports.getAllFilms = async (req, res) => {
     }
 
     if(!sort_name){
-      sort['createdAt'] = 'asc';
+      sort['createdAt'] = 'desc';
     }
     if (title) {
       filter_data.title = { $regex: title, $options: 'i' };
