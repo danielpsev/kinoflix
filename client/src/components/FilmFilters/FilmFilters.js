@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MainCSS from "./Main.module.css";
+import FilmFiltersCSS from "./FilmFilters.module.css";
 import {
   AiOutlineSortAscending,
   AiOutlineSortDescending,
 } from "react-icons/ai";
 const FilmFilters = (props) => {
-  const { setFilters, setCurrPage } = props;
+  const {setFilters, setCurrPage } = props;
   const [searchInputVal, setSearchInputVal] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [order, setOrder] = useState("desc");
@@ -28,6 +28,8 @@ const FilmFilters = (props) => {
     setFilters(filters);
     setCurrPage(1);
   };
+
+
   const onSubmit = (e) => {
     e.preventDefault();
     handleFiltersChange();
@@ -38,17 +40,17 @@ const FilmFilters = (props) => {
     handleFiltersChange("reset");
   };
   return (
-    // <div className={MainCSS.MainTopContainer}>
-      <div className={MainCSS.FiltersContainer}>
+    // <div className={FilmFiltersCSS.MainTopContainer}>
+      <div className={FilmFiltersCSS.FiltersContainer}>
         <form onSubmit={onSubmit}>
-          {/* <select className={MainCSS.FilterDropdown}>
+          {/* <select className={FilmFiltersCSS.FilterDropdown}>
             <option>Žanras</option>
             <option>Komedija</option>
             <option>Fantastika</option>
             <option>Kriminalas</option>
           </select> */}
           <select
-            className={MainCSS.FilterDropdown}
+            className={FilmFiltersCSS.FilterDropdown}
             onChange={handleFilterValChange}
             value={sortBy}
           >
@@ -64,7 +66,7 @@ const FilmFilters = (props) => {
                 handleFiltersChange();
               }}
             >
-              <AiOutlineSortDescending className={MainCSS.FilterAscDescBtn} />
+              <AiOutlineSortDescending className={FilmFiltersCSS.FilterAscDescBtn} />
             </span>
           ) : (
             <span
@@ -73,12 +75,12 @@ const FilmFilters = (props) => {
                 handleFiltersChange();
               }}
             >
-              <AiOutlineSortAscending className={MainCSS.FilterAscDescBtn} />
+              <AiOutlineSortAscending className={FilmFiltersCSS.FilterAscDescBtn} />
             </span>
           )}{" "}
           <input
             type="text"
-            className={`${MainCSS.searchInput}`}
+            className={`${FilmFiltersCSS.searchInput}`}
             name="search"
             placeholder="Paieška..."
             onChange={handleSearchChange}
@@ -86,7 +88,7 @@ const FilmFilters = (props) => {
           />
           <button
             type="submit"
-            className={`${MainCSS.SearchBtn} btn btn-primary`}
+            className={`${FilmFiltersCSS.SearchBtn} btn btn-primary`}
             onClick={() => onSubmit}
           >
             Ieškoti

@@ -1,0 +1,47 @@
+.searchInput:focus{
+    border: 2px solid var(--acc-color);
+}
+.searchInput{
+    padding: 15px;
+    /* padding-bottom: 15px; */
+    border: 2px solid var(--border-color);
+}
+
+
+.FiltersContainer{
+    padding: 10px 0px 10px 0px;
+  }
+  .SearchBtn{
+    width: 200px;
+  }
+  .FiltersContainer form{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .FilterDropdown:focus{
+    border: 2px solid var(--acc-color);
+  }
+  .FilterDropdown{
+    position: relative;
+    width: 200px;
+    padding: 15px;
+    border: unset;
+    outline: unset;
+    color: #eee;
+    border-radius: 5px;
+    background-color: unset;
+    border: 2px solid var(--border-color);
+    appearance: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .FilterDropdown option{
+    padding: 10px;
+    background-color:  var(--border-color);
+  }
+  .FilterAscDescBtn{
+    font-size: 2em;
+    color: var(--acc-color) !important;
+    cursor: pointer;
+  }

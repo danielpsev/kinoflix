@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../axios";
-import FilmFilters from "../../Main/FilmFilters";
+import FilmFilters from "../../../components/FilmFilters/FilmFilters";
 import AdmFilmsTable from "./AdmFilmsTable";
 import Pagination from "../../../components/Pagination/Pagination";
 
@@ -32,11 +32,9 @@ const AdmFilmsList = () => {
     getFilms(currPage);
   }, [currPage, filters]);
 
-
-
   return (
         <div className="main-inner mh-50vh">
-                    <FilmFilters
+         <FilmFilters
             getFilms={getFilms}
             setFilms={setFilms}
             setFilters={setFilters}

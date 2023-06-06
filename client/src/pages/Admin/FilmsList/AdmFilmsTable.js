@@ -78,8 +78,8 @@ export default function AdmFilmsTable(props) {
             </tr>
           ) : films_render.length === 0 ? (
             <tr>
-              <td colSpan={5} style={{ textAlign: "center" }}>
-                Įrašų nėra
+              <td colSpan={7} style={{ textAlign: "center" }}>
+                Nerasta
               </td>
             </tr>
           ) : (

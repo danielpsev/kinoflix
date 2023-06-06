@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FilmsList from "./FilmsList";
 import axios from "../../axios";
-import FilmFilters from "./FilmFilters";
+import FilmFilters from "../../components/FilmFilters/FilmFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import MainCSS from "./Main.module.css";
 const Main = () => {
