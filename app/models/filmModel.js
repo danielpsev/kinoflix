@@ -17,6 +17,8 @@ const filmSchema = mongoose.Schema(
         },
         description: {
             type: String,
+            minLength: 2,
+            maxLength: 4000,
             required: true,
         },
         country: {
@@ -28,10 +30,14 @@ const filmSchema = mongoose.Schema(
         },
         genres: {
             type: Array,
+            minLength: 2,
+            maxLength: 20,
             required: true 
         },
         releaseYear: {
             type: Number,
+            min: 1895,
+            max: 2100,
             required: true
         },
         duration: {
@@ -40,6 +46,8 @@ const filmSchema = mongoose.Schema(
         },
         rating: {
             type: Number,
+            min: 0.01,
+            max: 10,
             required: true
         },
         posterSrc:{
@@ -56,6 +64,8 @@ const filmSchema = mongoose.Schema(
         },
         director:{
             type: String,
+            minLength: 2,
+            maxLength: 20,
             required: true
         }
     },

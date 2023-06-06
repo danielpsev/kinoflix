@@ -124,7 +124,13 @@ exports.getFilm = async (req, res) => {
 
 exports.addFilm = async (req, res) => {
   try {
-    const newFilm = await Film.create({...req.body});
+    const { title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID} = req.body;
+    const findFilm = await Film.findOne({title});
+    if(findFilm){
+      return res.status(400).json({status: "error", mess: "Filmas su tokiu pavadinimu jau egzistuoja" });
+    }
+    const newFilm = await Film.create(
+      {title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID, type: "film"});
     res.status(201).json(newFilm);
   } catch (err) {
     console.log(err);

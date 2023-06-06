@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FilmsList from "./FilmsList";
 import axios from "../../axios";
 import FilmFilters from "./FilmFilters";
-import Pagination from "./Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 const Main = () => {
   const [films, setFilms] = useState([]);
   const [totalPages, setTotalPages] = useState(0);

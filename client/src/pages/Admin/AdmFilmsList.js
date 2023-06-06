@@ -4,7 +4,7 @@ import axios from "../../axios";
 const AdmFilmsList = () => {
 
   return (
-        <div>
+        <div className="main-inner">
           films list
         </div>
   );

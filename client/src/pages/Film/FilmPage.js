@@ -55,12 +55,11 @@ export default function FilmPage() {
       mute: 1,
     },
   };
-console.log(genres);
   return (
     <main>
       <style>
         {`.App::before {
-          background-image: url(${bgSrc}) !important;
+          background-image: url(${bgSrc && bgSrc.substr(0, 4) == 'http' ? bgSrc : '../' + bgSrc}) !important;
           background-size: cover;
         }`}
       </style>
@@ -84,7 +83,9 @@ console.log(genres);
                     <img
                       className={FilmCSS.FilmContainer__img}
                       alt="poster"
-                      src={posterSrc}
+                      src={posterSrc.substr(0, 4) == 'http' ? posterSrc : '../' + posterSrc}
+                      // src={posterSrc}
+                      // ${bgSrc.substr(0, 3) == 'http' ? bgSrc : '../'+bgSrc+''}
                     />
                     <div className={FilmCSS.RatingBox}>
                       <AiFillStar className={FilmCSS.RatingBox__star} />

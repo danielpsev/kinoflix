@@ -95,6 +95,12 @@ background: var(--error-color) !important;
 .error-color{
     color: var(--error-color);
 }
+.text-center{
+    text-align: center;
+}
+.object-fit-cover{
+    object-fit: cover;
+}
 /* h1{
 
 }

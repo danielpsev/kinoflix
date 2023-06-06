@@ -3,6 +3,12 @@
     gap: 10px;
     justify-content: center;
 }
+.addFilmInner{
+    margin: 25px auto;
+    background-color: var(--box-color);
+    max-width: 500px;
+    padding: 20px;
+}
 .addFilmContainer{
     margin-top: 25px;
     margin-bottom: 50px;
@@ -12,6 +18,7 @@
     justify-content: center;
 }
 .addFilm__title{
+    margin-top: 15px;
     font-size: 1.2em;
 }
 .addFilm__step{
@@ -24,6 +31,7 @@
 }
 .addFilmForm{
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .addFilmForm input,
 .addFilmForm textarea{
@@ -43,4 +51,11 @@
 .addFilmForm .labelWithIcon{
     display: flex;
     gap: 5px;
+}
+
+@media screen and (max-width: 767px){
+    .addFilmForm input,
+    .addFilmForm textarea{
+        width: 270px;
+}
 }

@@ -23,12 +23,11 @@ const Admin = () => {
   return (
     <main>
       <div className="wrapper">
-        <div className="main-inner mh-50vh">
+
           <AdmNav funcShowPage={funcShowPage} showPage={showPage}/>
           {showPage == "films_list" ? <AdmFilmsList /> : null}
       {showPage == "add_film" ? <AdmAddFilm /> : null}
         </div>
-      </div>
     </main>
   );
 };
