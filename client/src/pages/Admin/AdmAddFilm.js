@@ -73,7 +73,7 @@ const AdmAddFilm = () => {
       <div className={AdminCSS.addFilmContent}>
       {trailerInfoModal ? <TrailerInfoModal trailerInfoModal={trailerInfoModal} setTrailerInfoModal={setTrailerInfoModal}/> : null}
         <h3 className={`${AdminCSS.addFilm__title} text-color-second`}>
-          Filmo pridėjimas.
+          Filmo pridėjimas
         </h3>
         <h4 className={`${AdminCSS.addFilm__step} text-color-second`}>
           Žingsnis <span className="acc-color">{currStep}</span> iš <span className="acc-color">3</span>

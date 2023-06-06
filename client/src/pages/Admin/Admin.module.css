@@ -18,7 +18,6 @@
     justify-content: center;
 }
 .addFilm__title{
-    margin-top: 15px;
     font-size: 1.2em;
 }
 .addFilm__step{
@@ -53,9 +52,29 @@
     gap: 5px;
 }
 
+
+/*AdmFilmsList*/
+.tableImg{
+    width: 50px;
+}
+.tableActionIcon{
+    font-size: 1.1em;
+    margin: 5px;
+}
+.tableActionIcon:hover{
+    cursor: pointer;
+    color: var(--acc-color);
+}
+
 @media screen and (max-width: 767px){
     .addFilmForm input,
     .addFilmForm textarea{
         width: 270px;
-}
+    }
+    .tableImg{
+        width: 32px;
+    }
+    .hideOnMobile{
+        display: none;
+    }
 }

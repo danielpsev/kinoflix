@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import AdmNav from "./AdmNav";
 import AdmAddFilm from "./AdmAddFilm";
-import AdmFilmsList from "./AdmFilmsList";
+import AdmFilmsList from "./FilmsList/AdmFilmsList";
 import { useNavigate, useLocation } from "react-router-dom";
 const Admin = () => {
   const [showPage, setShowPage] = useState("films_list");
@@ -26,7 +26,7 @@ const Admin = () => {
 
           <AdmNav funcShowPage={funcShowPage} showPage={showPage}/>
           {showPage == "films_list" ? <AdmFilmsList /> : null}
-      {showPage == "add_film" ? <AdmAddFilm /> : null}
+          {showPage == "add_film" ? <AdmAddFilm /> : null}
         </div>
     </main>
   );

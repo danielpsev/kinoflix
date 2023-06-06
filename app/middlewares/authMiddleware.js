@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 exports.requireAuth = (req, res, next) => {
   const token = (req.headers.authorization || "").replace(/Bearer\s?/, "");
   if (token) {
-    console.log("Token found");
     try {
       const decoded = jwt.verify(
         token, process.env.JWT_SECRET

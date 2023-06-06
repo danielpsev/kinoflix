@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import FilmsList from "./FilmsList";
-import axios from "../../axios";
-import FilmFilters from "./FilmFilters";
-import Pagination from "../../components/Pagination/Pagination";
-import MainCSS from "./Main.module.css";
-const Main = () => {
-  const [films, setFilms] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
+import axios from "../../../axios";
+import FilmFilters from "../../Main/FilmFilters";
+import AdmFilmsTable from "./AdmFilmsTable";
+import Pagination from "../../../components/Pagination/Pagination";
+
+const AdmFilmsList = () => {
+  const [totalPages, setTotalPages] = useState(1);
   const [currPage, setCurrPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState("");
-  const getFilms = async (page, filters) => {
+  const [films, setFilms] = useState([]);
+  const [filters, setFilters] = useState('');
+  const getFilms = async (page) => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/films?page=${currPage}${filters}`);
@@ -29,25 +29,20 @@ const Main = () => {
     }
   };
   useEffect(() => {
-    getFilms(currPage, filters);
+    getFilms(currPage);
   }, [currPage, filters]);
+
+
+
   return (
-    <main>
-      <div className="wrapper">
-        <div className="main-inner">
-        <div className={MainCSS.Banner}></div>
-          <FilmFilters
+        <div className="main-inner mh-50vh">
+                    <FilmFilters
             getFilms={getFilms}
             setFilms={setFilms}
             setFilters={setFilters}
             setCurrPage={setCurrPage}
           />
-          <FilmsList
-            getFilms={getFilms}
-            films={films}
-            setFilms={setFilms}
-            isLoading={isLoading}
-          />
+          <AdmFilmsTable isLoading={isLoading} films={films} getFilms={getFilms}/>
           <Pagination
             totalPages={totalPages}
             setTotalPages={setTotalPages}
@@ -55,9 +50,7 @@ const Main = () => {
             setCurrPage={setCurrPage}
           />
         </div>
-      </div>
-    </main>
   );
 };
 
-export default Main;
+export default AdmFilmsList;

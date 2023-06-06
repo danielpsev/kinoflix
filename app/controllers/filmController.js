@@ -21,7 +21,6 @@ exports.getAllFilms = async (req, res) => {
     if (title) {
       filter_data.title = { $regex: title, $options: 'i' };
     }
-    console.log(sort);
     let allFilms = await Film.find(filter_data)
       .sort(sort)
       .limit(parseInt(limit))
@@ -134,6 +133,29 @@ exports.addFilm = async (req, res) => {
     res.status(201).json(newFilm);
   } catch (err) {
     console.log(err);
+    res.status(500).json({status: "error", mess: err });
+  }
+};
+
+exports.deleteFilm = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const delete_film = await Film.findById(id);
+    if (!delete_film) {
+      return res.status(404).json({status: "error", mess: `Filmas nr: ${id} neegzistuoja` });
+    } else {
+        try {
+          await Film.findByIdAndDelete(id);
+          res.status(200).json({
+            status: "success",
+            message: `Filmas nr: ${id} sėkmingai pašalintas.`,
+            film: delete_film,
+          });
+        } catch (error) {
+          res.status(500).json({status: "error", mess: err });
+        }
+    }
+  } catch (err) {
     res.status(500).json({status: "error", mess: err });
   }
 };
