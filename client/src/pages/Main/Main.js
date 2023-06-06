@@ -6,7 +6,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import MainCSS from "./Main.module.css";
 const Main = () => {
   const [films, setFilms] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [currPage, setCurrPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState("");

@@ -1,10 +1,11 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 export default function Pagination(props) {
-  const { totalPages, setCurrPage } = props;
+  const {totalPages, currPage, setCurrPage } = props;
   const handlePageClick = async (data) => {
     setCurrPage(data.selected + 1);
   };
+
   return (
     <>
       <div className="pagination-container">
@@ -23,7 +24,10 @@ export default function Pagination(props) {
             breakClassName={""}
             breakLinkClassName={""}
             activeClassName={"pagination-item__active"}
+            key={currPage}
+            initialPage={currPage - 1}
           />
+
         </div>
       </div>
     </>

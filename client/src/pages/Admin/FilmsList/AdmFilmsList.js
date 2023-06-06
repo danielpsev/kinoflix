@@ -16,7 +16,7 @@ const AdmFilmsList = () => {
       const res = await axios.get(`/films?page=${currPage}${filters}`);
       if (res.data.status != "error") {
         setFilms(res.data.data.films);
-        setTotalPages(res.data.data.totalPages);
+        setTotalPages(res.data.data.totalPages)
       } else {
         setTotalPages(1);
         setFilms([]);
