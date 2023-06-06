@@ -1,0 +1,46 @@
+.NavContainer{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.addFilmContainer{
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+.addFilmContent{
+    display: grid;
+    justify-content: center;
+}
+.addFilm__title{
+    font-size: 1.2em;
+}
+.addFilm__step{
+    font-size: 1em;
+    margin-top: 15px;
+}
+.addFilm__title,
+.addFilm__step{
+    text-align: center;
+}
+.addFilmForm{
+    margin-top: 15px;
+}
+.addFilmForm input,
+.addFilmForm textarea{
+    display: block;
+    margin-top: 10px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.addFilmForm label{
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+.addFilmForm .addFilmBtn{
+    margin-top: 20px;
+}
+.addFilmForm .labelWithIcon{
+    display: flex;
+    gap: 5px;
+}

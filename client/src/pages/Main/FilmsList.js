@@ -8,28 +8,27 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { useAuth } from "../../context/Auth";
 export default function FilmsList(props) {
   const auth = useAuth();
-  const { getFilms, films } = props;
-  const [isLoading, setIsLoading] = useState(true);
+  const { getFilms, films, isLoading } = props;
   const [totalPages, setTotalPages] = useState(0);
-  const handleFilmsChange = async (page) => {
-    setIsLoading(true);
-    const res = await getFilms(page);
-    if (res) {
-      setTotalPages(res.data.data.totalPages);
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    handleFilmsChange(1);
-  }, [auth.user]);
+  // const handleFilmsChange = async (page) => {
+  //   setIsLoading(true);
+  //   const res = await getFilms(page);
+  //   if (res) {
+  //     setTotalPages(res.data.data.totalPages);
+  //     setIsLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   handleFilmsChange(1);
+  // }, [auth.user]);
   let films_render = films.map((el) => {
     return <Film obj={el} key={uuidv4()} />;
   });
 
-  const handlePageClick = async (data) => {
-    let currPage = data.selected + 1;
-    handleFilmsChange(currPage);
-  };
+  // const handlePageClick = async (data) => {
+  //   let currPage = data.selected + 1;
+  //   handleFilmsChange(currPage);
+  // };
 
   return (
     <>
@@ -49,11 +48,11 @@ export default function FilmsList(props) {
           films.length > 0 ? (
             films_render
           ) : (
-            <p>Nerasta.</p>
+            <p className="text-color-second">Nerasta.</p>
           )
         ) : null}
       </div>
-      <div className="pagination-container">
+      {/* <div className="pagination-container">
         <div className="pagination-inner">
           <ReactPaginate
             previousLabel={"<"}
@@ -74,7 +73,7 @@ export default function FilmsList(props) {
             activeClassName={"pagination-item__active"}
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

@@ -72,6 +72,7 @@ exports.authRegister = async (req, res) => {
         data: data,
       });
     } catch (err) {
+      console.log(err);
       res.status(500).json({ status: "error", mess: err });
     }
   }

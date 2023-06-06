@@ -1,26 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MainCSS from "./Main.module.css";
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
 const FilmFilters = (props) => {
-  const {getFilms, setFilms} = props;
+  const {setFilters, setCurrPage} = props;
   const [searchInputVal, setSearchInputVal] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [order, setOrder] = useState('desc');
 
  const handleFilterValChange = (e) => {
   setSortBy(e.target.value);
-  handleFiltersChange();
+  // handleFiltersChange();
  }
  const handleSearchChange = (e) => {
   setSearchInputVal(e.target.value);
  }
+ useEffect(() => {
+  handleFiltersChange();
+}, [order, sortBy]);
+
   const handleFiltersChange = async(reset) => {
       const filters = !reset ? `&sort_name=${sortBy}&sort_type=${order}&title=${searchInputVal}` : '';
-      console.log(filters);
-      const res = await getFilms(1, filters);
-      if(!res){
-        setFilms([]);
-      }
+      setFilters(filters);
+      setCurrPage(1);
   }
   const onSubmit = (e) => {
     e.preventDefault();;
@@ -36,12 +37,12 @@ const FilmFilters = (props) => {
       <div className={MainCSS.Banner}></div>
       <div className={MainCSS.FiltersContainer}>
         <form onSubmit={onSubmit}>
-          <select className={MainCSS.FilterDropdown}>
+          {/* <select className={MainCSS.FilterDropdown}>
             <option>Žanras</option>
             <option>Komedija</option>
             <option>Fantastika</option>
             <option>Kriminalas</option>
-          </select>
+          </select> */}
           <select className={MainCSS.FilterDropdown} onChange={handleFilterValChange} value={sortBy}>
             <option value=''>Rūšiuoti pagal</option>
             <option value='createdAt'>Pridėjimo datą</option>
@@ -60,7 +61,7 @@ const FilmFilters = (props) => {
             onChange={handleSearchChange}
             value={searchInputVal}
           />
-          <button type="submit" className={`${MainCSS.SearchBtn} btn btn-success`} onClick={() => onSubmit}>Ieškoti</button>
+          <button type="submit" className={`${MainCSS.SearchBtn} btn btn-primary`} onClick={() => onSubmit}>Ieškoti</button>
           { sortBy || searchInputVal ? <button type="button" className={`btn btn-error`} onClick={() => resetFilters()}>Atstatyti</button> : null}
         </form>
       </div>

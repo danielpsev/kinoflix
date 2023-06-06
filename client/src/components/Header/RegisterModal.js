@@ -188,7 +188,6 @@ export default function RegisterModal(props) {
               <p className="modal-no-account">
                 Jau turi paskyrą?
                 <b>
-                  {" "}
                   <span
                     className="sign-up-in-span"
                     onClick={() => {

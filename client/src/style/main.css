@@ -18,9 +18,9 @@
     --app-before-background: url('../assets/images/bg.jpg');
 }
 .light{
-    --body-bg: #eee;
+    --body-bg: #F3F3F3;
     --text-color: #171A20;
-    --box-color: #f7f7f7;   
+    --box-color: #fff;   
 }
 .text-color{
     color: var(--text-color);
@@ -85,6 +85,15 @@ background: var(--error-color) !important;
 }
 .Toastify__toast-theme--colored.Toastify__toast--warning{
     background: var(--warning-color) !important;
+}
+.acc-color{
+    color: var(--acc-color);
+}
+.success-color{
+    color: var(--success-color);
+}
+.error-color{
+    color: var(--error-color);
 }
 /* h1{
 
@@ -156,15 +165,17 @@ h6{
     color: #f7f7f7;
 }
 .btn-success{
-    width: 100px;
     background-color: #3BA55B;
 }
-.btn-primary{
+.btn-success,
+.btn-primary,
+.btn-secondary{
     width: 100px;
+}
+.btn-primary{
     background-color: var(--acc-color);
 }
 .btn-error{
-    width: 100px;
     background-color: #D83C3E;
 }
 
@@ -271,8 +282,15 @@ main{
     border-radius: 10px;
 }
 
-
-
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.mh-50vh{
+    min-height: 50vh;
+}
 
 /* pagination */
 .pagination-container{
@@ -357,7 +375,9 @@ footer .creator img:hover{
 
 
 
-
+.mt-10{
+    margin-top: 10px;
+}
 
 
 input,
@@ -369,19 +389,22 @@ textarea{
     color: var(--text-color__second);
     padding: 10px;
     resize: none;
-    border: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
 }
 .header-logReg-btn{
     display: flex;
 }
 
-input.error {
+input.error,
+textarea.error {
     color: var(--error-color);
     border: 1px solid var(--error-color);
   }
-input.error:focus {
+input.error:focus,
+textarea.error:focus{
     border: 1px solid var(--error-color);
-  }
+}
   .error-mess-box {
     display: flex;
     align-items: center;
@@ -394,7 +417,6 @@ input.error:focus {
   .error-mess-icon {
     margin-right: 5px;
   }
-
 
 
 .modal-container{
@@ -413,7 +435,7 @@ input.error:focus {
     transform: translate(-50%, 10%);
     width: 400px;
     max-width: 500px;
-    min-height: 400px;
+    /* min-height: 400px; */
     background-color: var(--body-bg);
 }
 .modal-content{
@@ -422,6 +444,7 @@ input.error:focus {
     justify-content: center;
     padding: 25px;
 }
+
 .modal-title-container{
     position: relative;
 }
@@ -429,6 +452,10 @@ input.error:focus {
     text-align: center;
     font-size: 1.5em;
     color: var(--text-color__title);
+}
+.modal-data{
+    margin-top: 25px;
+    text-align: center;
 }
 .modal-close-btn{
     position: absolute;
@@ -467,7 +494,8 @@ input{
     border: 1px solid transparent;
     color: var(--text-color__second);
 }
-input:focus{
+input:focus,
+textarea:focus{
     border: 1px solid var(--acc-color);
 }
 .input__body{

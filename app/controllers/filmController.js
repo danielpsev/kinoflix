@@ -1,14 +1,9 @@
 const Film = require("../models/filmModel");
 const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
 const { isValidObjectId } = require("mongoose");
 
-
-
-
-
 exports.getAllFilms = async (req, res) => {
-  const { page = 1, limit = 12, filter, sort_name, sort_type, title } = req.query;
+  const { page = 1, limit = 18, filter, sort_name, sort_type, title } = req.query;
 
   try {
     let filter_data = {};
@@ -20,14 +15,13 @@ exports.getAllFilms = async (req, res) => {
     if (sort_name === 'title' || sort_name === 'releaseYear' || sort_name === 'rating' || sort_name === 'createdAt' ) {
       sort[sort_name] = sort_type;
     }
-
     if(!sort_name){
-      sort['createdAt'] = 'desc';
+      sort['createdAt'] = sort_type ? sort_type : 'desc';
     }
     if (title) {
       filter_data.title = { $regex: title, $options: 'i' };
     }
-
+    console.log(sort);
     let allFilms = await Film.find(filter_data)
       .sort(sort)
       .limit(parseInt(limit))
@@ -38,7 +32,7 @@ exports.getAllFilms = async (req, res) => {
 
     if (title && allFilms.length === 0) {
       return res.status(200).json({
-        status: 'success',
+        status: 'error',
         message: 'Film not found.'
       });
     }
@@ -103,66 +97,6 @@ exports.getUserLikedFilms = async (req, res) => {
   });
 }
 }
-
-// exports.getAllFilms = async (req, res) => {
-//   const {page = 1, limit = 10} = req.query;
-//   try {
-
-//     let {filter, sort_name, sort_type} = req.query; 
-//     let filter_data = {};
-//     if(filter){
-//         filter_data = {status: filter}
-//     }
-//     if(sort_name != 'title' && sort_name != 'price' && sort_name != 'createdAt'){
-//         sort_name = null;
-//     }
-//     const allFilms = await Film.find(filter_data)
-//     .sort({[sort_name]: sort_type})
-//     .limit(limit * 1)
-//     .skip((page - 1) * limit);
-
-
-//     const count = await Film.countDocuments();
-//    res.status(200).json(
-//     {
-//       status: "success",
-//       data: {
-//         films: allFilms, 
-//         totalPages: Math.ceil(count / limit),
-//         currentPage: page
-//       }
-//     }
-//     );
-//   } catch (err) {
-//     res.status(500).json({
-//       status: "error",
-//       message: err.message,
-//     });
-//   }
-// };
-
-// exports.getAllFilms = async (req, res) => {
-//   const { limit = 0 } = req.query;
-
-//   try {
-//     const allFilms = await Film.find()
-//       .sort({ date: -1 })
-//       .limit(limit);
-
-//     res.status(200).json({
-//       status: "success",
-//       results: allFilms.length,
-//       data: {
-//         films: allFilms,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       status: "error",
-//       message: err.message,
-//     });
-//   }
-// };
 exports.getFilm = async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
@@ -219,7 +153,7 @@ exports.likeFilm = async (req, res) => {
       });
     }
 
-    // Check if the filmId already exists in the likes array of the user
+    // Tikrinimas, jei vartotojas jau palikino filmą.
     const userAlreadyLiked = user.likes.some((like) => like.film === id);
 
     if (userAlreadyLiked) {
@@ -263,7 +197,7 @@ exports.dislikeFilm = async (req, res) => {
       });
     }
 
-    // Check if the filmId exists in the likes array of the user
+    // Tikrinimas, ar filmId yra vartotojo likes masyve 
     const likedIndex = user.likes.findIndex(like => like.film === id);
     if (likedIndex === -1) {
       return res.status(400).json({
@@ -272,7 +206,7 @@ exports.dislikeFilm = async (req, res) => {
       });
     }
 
-    // Remove the film from the user's likes array
+    // Filmo salinimas is vartotojo likes masyvo 
     user.likes.splice(likedIndex, 1);
     await user.save();
 
@@ -285,65 +219,3 @@ exports.dislikeFilm = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// exports.deleteIncome = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const Delete_Income = await Income.findById(id);
-//     if (!Delete_Income) {
-//       return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja` });
-//     } else {
-//       if (Delete_Income.user_id == req.userInfo.id) {
-//         console.log("true");
-//         try {
-//           await Income.findByIdAndDelete(id);
-//           await saveAction(req.userInfo.id, "income_delete", Delete_Income);
-//           res.status(200).json({
-//             status: "success",
-//             message: `Pajamos nr: ${id} sėkmingai pašalintas.`,
-//             income: Delete_Income,
-//           });
-//         } catch (error) {
-//           res.status(500).json({ error: error.message });
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// exports.editIncome = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const Edit_Income = await Income.findById(id);
-//     if (!Edit_Income) {
-//       return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja` });
-//     } else {
-//       if (Edit_Income.user_id == req.userInfo.id) {
-//         try {
-//           const Updated_Income = await Income.findOneAndUpdate(
-//             {
-//               _id: id,
-//             },
-//             {
-//               user_id: req.userInfo.id,
-//               title: req.body.title,
-//               sum: req.body.sum,
-//               date: addTime(req.body.date),
-//             }
-//           );
-//           await saveAction(req.userInfo.id, "income_edit", Updated_Income);
-//           res.json({
-//             status: "success",
-//             data: Updated_Income,
-//           });
-//         } catch (error) {
-//           res.status(500).json({ error: error.message });
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };

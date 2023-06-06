@@ -24,6 +24,9 @@ const Header = () => {
 
              {auth.user ? (
              <div className="header-logReg-btn">
+                <NavLink to="/admin" className="header__register-btn">
+                    <span className="btn-primary">Admin</span>
+                </NavLink>
                 <NavLink to="/profile" className="header__register-btn">
                     <span className="btn-primary">Profilis</span>
                 </NavLink>
