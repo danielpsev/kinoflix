@@ -1,16 +1,20 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import trailerIdTutorial from "../../assets/images/modal/trailer_id_tutorial.png";
-export default function TrailerInfoModal(props) {
+interface IPropsTrailerInfoModal {
+  trailerInfoModal : boolean,
+  setTrailerInfoModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function TrailerInfoModal(props : IPropsTrailerInfoModal) {
   const { trailerInfoModal, setTrailerInfoModal } = props;
   // Modal close on background click
-  const modalOnMouseDown = (e) => {
+  const modalOnMouseDown = (e : React.MouseEvent<HTMLDivElement>)=> {
     if (e.target === e.currentTarget) {
       closeModal();
     }
   };
   // Modal close
-  const closeModal = () => {
+  const closeModal = () : void => {
     setTrailerInfoModal(false);
   };
   return (

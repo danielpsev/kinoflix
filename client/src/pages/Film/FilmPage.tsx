@@ -4,21 +4,22 @@ import { toast } from "react-toastify";
 import FilmCSS from "./Film.module.css";
 import axios from "../../axios";
 import { useLocation } from "react-router-dom";
-import { AiFillStar, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsFillPlayCircleFill } from "react-icons/bs";
+import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { likeFilm, dislikeFilm } from "../../func.js";
+import { likeFilm, dislikeFilm } from "../../func";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useAuth } from "../../context/Auth";
 import YouTube from "react-youtube";
-export default function FilmPage() {
-  const auth = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+import IFilm from "../../interfaces/IFilm";
+
+ const FilmPage: React.FC = () => {
+  const auth = useAuth() ?? {user: null};
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [film, setFilm] = useState({});
+  const [film, setFilm] = useState<IFilm | null>(null);
   const location = useLocation();
-  let path = location.pathname.split("/")[2];
-  const [like, setLike] = useState(false);
+  const path:string = location.pathname.split("/")[2];
+  const [like, setLike] = useState<boolean>(false);
   useEffect(() => {
     setIsLoading(true);
     const getFilm = async () => {
@@ -27,31 +28,33 @@ export default function FilmPage() {
         setFilm(res.data);
         setLike(res.data.isLiked);
         setIsLoading(false);
-      } catch (err) {
+      } catch (err : any) {
         toast.error(err.response.data.mess);
         navigate('/');
       }
     };
     getFilm();
   }, [path, auth.user]);
+
+
   const {
     _id,
     title,
     description,
-    genres,
+    genres = [],
     country,
     duration,
     releaseYear,
     rating,
-    posterSrc,
-    bgSrc,
+    posterSrc = 'img_placeholder.webp',
+    bgSrc = 'img_placeholder.webp',
     trailerID,
-  } = film;
+  } = film ?? {};
 
   const videoId = trailerID;
   const playerOptions = {
     playerVars: {
-      autoplay: 0,
+      autoplay: 0 as 0 | 1 | undefined, // Specify the type of autoplay
       mute: 1,
     },
   };
@@ -140,59 +143,4 @@ export default function FilmPage() {
     </main>
   );
 }
-
-{
-  /* <main>
-<style>
-  {`.App::before {
-    background-image: ${bg} !important;
-    background-size: cover;
-  }`}
-</style>
-  <div className="wrapper">
-      <div>
-          <div className={FilmCSS.FilmCover}>
-          {/* <img className={FilmCSS.FilmCover__img} src="https://www.scubadivermag.com/wp-content/uploads/2019/12/avatar-2-cover.jpg" title="cover"/> */
-}
-// <div className={FilmCSS.FilmCover__overlay}>
-// </div>
-{
-  /* <div className="wrapper"> */
-}
-// <section className={FilmCSS.FilmContainer}>
-// <div className={FilmCSS.PosterBox}>
-//                   <img className={FilmCSS.FilmContainer__img} alt="poster" src="https://www.comingsoon.net/wp-content/uploads/sites/3/2022/09/Avatar-Dolby-Poster.jpg"/>
-//                   <div className={FilmCSS.RatingBox}><AiFillStar className={FilmCSS.RatingBox__star}/><h3 className={FilmCSS.RatingBox__rate}>9.7</h3></div>
-//                   </div>
-//                   <div className={FilmCSS.FilmContainer__RightSideContainer}>
-//                       <h2 className={FilmCSS.FilmRightSideContainer__title}>Avatar 2</h2>
-//                       <p className={FilmCSS.FilmRightSideContainer__description}>Po beveik 13 metų režisierius James Cameron kviečia sugrįžti į fantastinį Pandoros pasaulį, kur vanduo susieja viską – prieš gimstant ir po mirties.
-
-// Po konflikto tarp žmonių kolonizatorių ir vietinių Na‘vi genties atstovų, buvęs jūrų pėstininkas Džeikas Salis (akt. Sam Worthington) tapo tikru Na‘vi genties nariu ir dabar gyvena su savo nauja šeima.
-
-// Bet pažįstama grėsmė sugrįžta užbaigti tai, kas buvo pradėta anksčiau ir Džeikas privalo įkvėpti Neytiri (akt. Zoe Saldana) bei visą Na‘vi armiją, kad apsaugotų jų planetą.
-
-// Nuo mokslinės fantastikos ir veiksmo filmo „Terminatorius“ iki romantinės dramos „Titanikas“, režisierius James Cameron ne kartą įrodė, kad už jį niekas geriau nesupranta kino žiūrovų. Tačiau jo didžiausias pasisekimas kino teatruose išlieka daugiausiai visoje kino istorijoje bilietų kasose uždirbęs 2009 metų mokslinės fantastikos ir veiksmo filmas „Įsikūnijimas“. Šis filmas buvo nominuotas devyniems JAV kino meno ir mokslo akademijos apdovanojimams, įskaitant už geriausią filmą ir geriausią režisierių, ir laimėjo tris „Oskarus“ už geriausią kinematografiją, gamybos dizainą ir vaizdo efektus.
-
-// Originalaus filmo „Įsikūnijimas“ pirmajame tęsinyje, kurio veiksmas vyksta praėjus daugiau nei dešimtmečiui po pirmojo filmo įvykių, sugrįžta aktoriai Zoe Saldana, Sam Worthington ir Sigourney Weaver, taip pat pasirodys Kate Winslet, Vin Diesel ir Michelle Yeoh. </p>
-//                 <div className={FilmCSS.FilmRightSideContainer__detailsBox}>
-//                   <div>
-//                   <p className="nowrap">Išleidimo metai: <b>2023</b></p>
-//                   <p className="nowrap">Žanras: <b>Fantastika</b></p>
-//                   <p className="nowrap">Trukmė <b>2 val. 45 min.</b></p>
-//                   </div>
-//                   <button className={`btn btn-secondary ${FilmCSS.FilmRightSideContainer__detailsBtn}`}>Išsaugoti</button>
-//                 </div>
-//                 </div>
-//               </section>
-//               <div className={FilmCSS.FilmTrailerContainer}>
-//               <YouTube videoId={videoId} opts={playerOptions} />
-//               </div>
-
-{
-  /* </div> */
-}
-//         </div>
-//     </div>
-//  </div>
-// </main> */}
+export default FilmPage;

@@ -4,13 +4,13 @@ import { useAuth } from "../../context/Auth";
 import ProfileCSS from "./Profile.module.css";
 import FilmsList from "../Main/FilmsList";
 import Pagination from "../../components/Pagination/Pagination";
-const Profile = () => {
-  const auth = useAuth();
-  const [films, setFilms] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currPage, setCurrPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const getLikedFilms = async (page) => {
+const Profile: React.FC = () => {
+  const auth = useAuth() ?? { user: null };
+  const [films, setFilms] = useState <string[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currPage, setCurrPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const getLikedFilms = async (page : number) => {
     try {
       const res = await axios.get(`/films/like/123?page=${page}`);
       setFilms(res.data.data.films);
@@ -32,13 +32,11 @@ const Profile = () => {
             <span className="acc-color">{auth.user.username}</span> mėgstamiausių filmų sąrašas
           </h2>
           <FilmsList
-            getFilms={getLikedFilms}
             films={films}
             isLoading={isLoading}
           />
           <Pagination
             totalPages={totalPages}
-            setTotalPages={setTotalPages}
             currPage={currPage}
             setCurrPage={setCurrPage}
           />

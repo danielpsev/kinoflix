@@ -6,10 +6,16 @@ import axios from "../../../axios";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import AdminCSS from "../Admin.module.css";
-export default function AdmFilmsTable(props) {
+import IFilm from "../../../interfaces/IFilm";
+interface IPropsAdmFilmsTable{
+  films : Array<string>,
+  isLoading : boolean,
+  getFilms: () => void
+}
+export default function AdmFilmsTable(props : IPropsAdmFilmsTable) {
   const { films, isLoading, getFilms} = props;
 
-  const deleteFilm = async (id) => {
+  const deleteFilm = async (id : string) => {
     swal
       .fire({
         title: "Veiksmo patvirtinimas",
@@ -32,7 +38,7 @@ export default function AdmFilmsTable(props) {
               confirmButtonColor: "#3BA55B",
             });
             getFilms();
-          } catch (err) {
+          } catch (err : any) {
             console.log(err);
             toast.error(err.response.data.mess);
           }
@@ -42,7 +48,8 @@ export default function AdmFilmsTable(props) {
 
 
   let films_render = films.map((el) => {
-    return <AdmFilm obj={el} key={uuidv4()} deleteFilm={deleteFilm} />;
+    const filmObj: IFilm = el as unknown as IFilm;
+    return <AdmFilm obj={filmObj} key={uuidv4()} deleteFilm={deleteFilm} />;
   });
 
 

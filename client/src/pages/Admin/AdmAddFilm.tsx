@@ -12,12 +12,13 @@ const AdmAddFilm = () => {
   const [trailerInfoModal, setTrailerInfoModal] = useState(false);
   const [currStep, setCurrStep] = useState(1);
   const navigate = useNavigate();
-  const validate = (values) => {
-    let errors = filmValidation(values);
+  const validate = (values : object) => {
+    console.log(values);
+    let errors : object = filmValidation(values);
     return errors;
   };
 
-  const isReadyForNextStep = (nextStep) => {
+  const isReadyForNextStep = (nextStep : number)=> {
     const err_mess =
       "Užpildykite visus laukelius ir ištaisykite klaidas prieš pereinant toliau!";
     const {
@@ -55,13 +56,13 @@ const AdmAddFilm = () => {
     }
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values : object) => {
     try {
       const res = await axios.post("/films/", values);
       formik.resetForm();
       toast.success("Filmas sėkmingai sukurtas");
       navigate("?type=films_list", { replace: true });
-    } catch (err) {
+    } catch (err : any) {
       console.log(err);
       console.log(err.response.data.mess);
       toast.error(`Klaida. ${err.response.data.mess}`);

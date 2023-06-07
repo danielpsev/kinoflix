@@ -2,7 +2,16 @@ import React from "react";
 import AdminCSS from '../Admin.module.css';
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-export default function AdmFilm(props) {
+import IFilm from "../../../interfaces/IFilm";
+
+
+
+interface IPropsAdmFilm{
+    obj: IFilm,
+    deleteFilm: (id: string) => void
+}
+
+export default function AdmFilm(props : IPropsAdmFilm) {
     const navigate = useNavigate();
     const {obj, deleteFilm} = props;
     const {_id, title, description, duration, releaseYear, posterSrc, director} = obj;

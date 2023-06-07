@@ -10,7 +10,7 @@ const AdmFilmsList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [films, setFilms] = useState([]);
   const [filters, setFilters] = useState('');
-  const getFilms = async (page) => {
+  const getFilms = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/films?page=${currPage}${filters}`);
@@ -29,21 +29,18 @@ const AdmFilmsList = () => {
     }
   };
   useEffect(() => {
-    getFilms(currPage);
+    getFilms();
   }, [currPage, filters]);
 
   return (
         <div className={`${AdminCSS.FilmsListInner} main-inner mh-50vh`}>
          <FilmFilters
-            getFilms={getFilms}
-            setFilms={setFilms}
             setFilters={setFilters}
             setCurrPage={setCurrPage}
           />
           <AdmFilmsTable isLoading={isLoading} films={films} getFilms={getFilms}/>
           <Pagination
             totalPages={totalPages}
-            setTotalPages={setTotalPages}
             currPage={currPage}
             setCurrPage={setCurrPage}
           />

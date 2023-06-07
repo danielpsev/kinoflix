@@ -1,8 +1,15 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
-export default function Pagination(props) {
+
+interface IPaginationprops {
+  totalPages : number,
+  currPage: number,
+  setCurrPage: React.Dispatch<React.SetStateAction<number>>
+}
+
+export default function Pagination(props : IPaginationprops) {
   const {totalPages, currPage, setCurrPage } = props;
-  const handlePageClick = async (data) => {
+  const handlePageClick = async (data : any) => {
     setCurrPage(data.selected + 1);
   };
 
@@ -27,7 +34,6 @@ export default function Pagination(props) {
             key={currPage}
             initialPage={currPage - 1}
           />
-
         </div>
       </div>
     </>
