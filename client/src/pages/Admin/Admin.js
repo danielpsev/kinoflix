@@ -23,7 +23,6 @@ const Admin = () => {
   return (
     <main>
       <div className="wrapper">
-
           <AdmNav funcShowPage={funcShowPage} showPage={showPage}/>
           {showPage == "films_list" ? <AdmFilmsList /> : null}
           {showPage == "add_film" ? <AdmAddFilm /> : null}

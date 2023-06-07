@@ -13,6 +13,7 @@ import YouTube from "react-youtube";
 import { filmValidation } from "../../func.js";
 import { useFormik } from "formik";
 import AdminCSS from "./Admin.module.css"
+import AdmNav from "./AdmNav";
 export default function AdmEditFilm() {
     const [trailerInfoModal, setTrailerInfoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +32,6 @@ export default function AdmEditFilm() {
             title,
             description,
             director,
-            genres,
             country,
             duration,
             releaseYear,
@@ -40,6 +40,7 @@ export default function AdmEditFilm() {
             bgSrc,
             trailerID,
           } = res.data;
+          const genres = res.data.genres.join(", ");
           formik.setValues({
             title,
             description,
@@ -66,19 +67,17 @@ export default function AdmEditFilm() {
     let errors = filmValidation(values);
     return errors;
   };
-
-
+    
   const onSubmit = async (values) => {
-    // try {
-    //   const res = await axios.post("/films/", values);
-    //   formik.resetForm();
-    //   toast.success("Filmas sėkmingai sukurtas");
-    //   navigate("?type=films_list", { replace: true }); 
-    // } catch (err) {
-    //   console.log(err);
-    //   console.log(err.response.data.mess);
-    //   toast.error(`Klaida. ${err.response.data.mess}`);
-    // }
+    try {
+      const res = await axios.patch("/films/" + path, values);
+      toast.success("Filmas sėkmingai atnaujintas");
+      navigate("/admin/?type=films_list", { replace: true }); 
+    } catch (err) {
+      console.log(err);
+      console.log(err.response.data.mess);
+      toast.error(`Klaida. ${err.response.data.mess}`);
+    }
   };
   const formik = useFormik({
     initialValues: {
@@ -397,7 +396,7 @@ export default function AdmEditFilm() {
                 ) : null}
               <img className="mt-10 object-fit-cover" src={formik.values.bgSrc.substr(0, 4) == 'http' ? formik.values.bgSrc : '../../../' + formik.values.bgSrc} width="100%" height="300px" alt="filmo fonas"/>
   <p>
-                  <label className={`${AdminCSS.labelWithIcon} text-color-second`} htmlFor="trailerID">
+                  <label className={`${AdminCSS.labelWithIcon} text-color-second`} htmlFor="trailerID" title="Kur ieškoti trailer id?">
                     Trailer id <BsFillPatchQuestionFill className="pointer" onClick={() => setTrailerInfoModal(true)}/>
                   </label>
                 </p>

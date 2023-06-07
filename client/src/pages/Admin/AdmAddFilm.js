@@ -3,9 +3,9 @@ import axios from "../../axios";
 import AdminCSS from "./Admin.module.css";
 import { useFormik } from "formik";
 import { AiFillWarning } from "react-icons/ai";
-import {BsFillPatchQuestionFill} from "react-icons/bs";
+import { BsFillPatchQuestionFill } from "react-icons/bs";
 import TrailerInfoModal from "./TrailerInfoModal";
-import {filmValidation } from "../../func";
+import { filmValidation } from "../../func";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const AdmAddFilm = () => {
@@ -18,31 +18,49 @@ const AdmAddFilm = () => {
   };
 
   const isReadyForNextStep = (nextStep) => {
-    const err_mess = 'Užpildykite visus laukelius ir ištaisykite klaidas prieš pereinant toliau!';
-      const { title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID} = formik.values;
-        if(nextStep == 2){
-          const hasProperties = formik.errors.hasOwnProperty("title") || formik.errors.hasOwnProperty("description") || formik.errors.hasOwnProperty("genres") || formik.errors.hasOwnProperty("country");
-          if(!hasProperties && title && description && genres && country){
-            setCurrStep(currStep + 1);
-          }else{
-            toast.error(err_mess);
-          }
-        }else if(nextStep == 3){
-          const hasProperties = formik.errors.hasOwnProperty("director") || formik.errors.hasOwnProperty("releaseYear") || formik.errors.hasOwnProperty("duration") || formik.errors.hasOwnProperty("rating");
-          if(!hasProperties && director && releaseYear && duration && rating){
-            setCurrStep(currStep + 1);
-          }else{
-            toast.error(err_mess);
-          }
-        }
-  }
+    const err_mess =
+      "Užpildykite visus laukelius ir ištaisykite klaidas prieš pereinant toliau!";
+    const {
+      title,
+      description,
+      genres,
+      country,
+      director,
+      releaseYear,
+      duration,
+      rating
+    } = formik.values;
+    if (nextStep == 2) {
+      const hasProperties =
+        formik.errors.hasOwnProperty("title") ||
+        formik.errors.hasOwnProperty("description") ||
+        formik.errors.hasOwnProperty("genres") ||
+        formik.errors.hasOwnProperty("country");
+      if (!hasProperties && title && description && genres && country) {
+        setCurrStep(currStep + 1);
+      } else {
+        toast.error(err_mess);
+      }
+    } else if (nextStep == 3) {
+      const hasProperties =
+        formik.errors.hasOwnProperty("director") ||
+        formik.errors.hasOwnProperty("releaseYear") ||
+        formik.errors.hasOwnProperty("duration") ||
+        formik.errors.hasOwnProperty("rating");
+      if (!hasProperties && director && releaseYear && duration && rating) {
+        setCurrStep(currStep + 1);
+      } else {
+        toast.error(err_mess);
+      }
+    }
+  };
 
   const onSubmit = async (values) => {
     try {
       const res = await axios.post("/films/", values);
       formik.resetForm();
       toast.success("Filmas sėkmingai sukurtas");
-      navigate("?type=films_list", { replace: true }); 
+      navigate("?type=films_list", { replace: true });
     } catch (err) {
       console.log(err);
       console.log(err.response.data.mess);
@@ -61,22 +79,28 @@ const AdmAddFilm = () => {
       rating: "",
       posterSrc: "img_placeholder.webp",
       bgSrc: "img_placeholder.webp",
-      trailerID: ""
+      trailerID: "",
     },
     onSubmit,
     validate,
   });
   return (
     <div className={`${AdminCSS.addFilmInner} mh-50vh`}>
-    <div className={AdminCSS.addFilmContainer}>
-      <div className={AdminCSS.addFilmContent}>
-      {trailerInfoModal ? <TrailerInfoModal trailerInfoModal={trailerInfoModal} setTrailerInfoModal={setTrailerInfoModal}/> : null}
-        <h3 className={`${AdminCSS.addFilm__title} text-color-second`}>
-          Filmo pridėjimas
-        </h3>
-        <h4 className={`${AdminCSS.addFilm__step} text-color-second`}>
-          Žingsnis <span className="acc-color">{currStep}</span> iš <span className="acc-color">3</span>
-        </h4>
+      <div className={AdminCSS.addFilmContainer}>
+        <div className={AdminCSS.addFilmContent}>
+          {trailerInfoModal ? (
+            <TrailerInfoModal
+              trailerInfoModal={trailerInfoModal}
+              setTrailerInfoModal={setTrailerInfoModal}
+            />
+          ) : null}
+          <h3 className={`${AdminCSS.addFilm__title} text-color-second`}>
+            Filmo pridėjimas
+          </h3>
+          <h4 className={`${AdminCSS.addFilm__step} text-color-second`}>
+            Žingsnis <span className="acc-color">{currStep}</span> iš{" "}
+            <span className="acc-color">3</span>
+          </h4>
           <form
             noValidate
             className={AdminCSS.addFilmForm}
@@ -164,7 +188,9 @@ const AdmAddFilm = () => {
                 </p>
                 <input
                   className={` ${
-                    formik.touched.country && formik.errors.country ? "error" : ""
+                    formik.touched.country && formik.errors.country
+                      ? "error"
+                      : ""
                   }`}
                   type="text"
                   id="country"
@@ -292,13 +318,11 @@ const AdmAddFilm = () => {
               </>
             ) : null}
 
-
-
-  {currStep == 3 ? (
+            {currStep == 3 ? (
               <>
                 <p>
                   <label className="text-color-second" htmlFor="posterSrc">
-                  Filmo afišos nuoroda
+                    Filmo afišos nuoroda
                   </label>
                 </p>
                 <input
@@ -321,7 +345,12 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.posterSrc}</span>
                   </div>
                 ) : null}
-              <img className="mt-10" src={formik.values.posterSrc} width="100px" alt="filmo afiša"/>
+                <img
+                  className="mt-10"
+                  src={formik.values.posterSrc}
+                  width="100px"
+                  alt="filmo afiša"
+                />
                 <p>
                   <label className="text-color-second" htmlFor="bgSrc">
                     Filmo fono nuoroda
@@ -329,9 +358,7 @@ const AdmAddFilm = () => {
                 </p>
                 <input
                   className={` ${
-                    formik.touched.bgSrc && formik.errors.bgSrc
-                      ? "error"
-                      : ""
+                    formik.touched.bgSrc && formik.errors.bgSrc ? "error" : ""
                   }`}
                   type="text"
                   id="bgSrc"
@@ -347,10 +374,24 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.bgSrc}</span>
                   </div>
                 ) : null}
-              <img className="mt-10 object-fit-cover" src={formik.values.bgSrc} width="100%" height="100px" alt="filmo fonas"/>
-  <p>
-                  <label className={`${AdminCSS.labelWithIcon} text-color-second`} htmlFor="trailerID">
-                    Trailer id <BsFillPatchQuestionFill className="pointer" onClick={() => setTrailerInfoModal(true)}/>
+                <img
+                  className="mt-10 object-fit-cover"
+                  src={formik.values.bgSrc}
+                  width="100%"
+                  height="100px"
+                  alt="filmo fonas"
+                />
+                <p>
+                  <label
+                    className={`${AdminCSS.labelWithIcon} text-color-second`}
+                    htmlFor="trailerID"
+                    title="Kur ieškoti trailer id?"
+                  >
+                    Trailer id{" "}
+                    <BsFillPatchQuestionFill
+                      className="pointer"
+                      onClick={() => setTrailerInfoModal(true)}
+                    />
                   </label>
                 </p>
                 <input
@@ -373,10 +414,8 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.trailerID}</span>
                   </div>
                 ) : null}
-
               </>
             ) : null}
-
 
             {currStep == 2 || currStep == 3 ? (
               <button
@@ -391,22 +430,24 @@ const AdmAddFilm = () => {
               <button
                 type="button"
                 className={`${AdminCSS.addFilmBtn} btn btn-primary float-right`}
-                onClick={() => {isReadyForNextStep(currStep + 1);}}
+                onClick={() => {
+                  isReadyForNextStep(currStep + 1);
+                }}
               >
                 Toliau
               </button>
             ) : null}
-            {currStep == 3 ? <button
+            {currStep == 3 ? (
+              <button
                 type="submit"
                 className={`${AdminCSS.addFilmBtn} btn btn-success float-right`}
               >
                 Pridėti
-              </button> : null}
-
-
+              </button>
+            ) : null}
           </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

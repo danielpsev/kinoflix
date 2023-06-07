@@ -185,6 +185,69 @@ exports.addFilm = async (req, res) => {
   }
 };
 
+
+exports.editFilm = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      // genres,
+      country,
+      director,
+      releaseYear,
+      duration,
+      rating,
+      posterSrc,
+      bgSrc,
+      trailerID,
+    } = req.body;
+    const genres = req.body.genres && typeof req.body.genres === 'string'
+    ? req.body.genres.split(',').map((genre) => genre.trim())
+    : [];
+    const findFilm = await Film.findOne({ _id: id });
+    if (!findFilm) {
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          mess: "Filmas nerastas",
+        });
+    }
+    try {
+
+      const updated_film = await Film.findOneAndUpdate(
+        {
+          _id: id,
+        },
+        {
+          title,
+          description,
+          genres,
+          country,
+          director,
+          releaseYear,
+          duration,
+          rating,
+          posterSrc,
+          bgSrc,
+          trailerID,
+        }
+      );
+      res.json({
+        status: "success",
+        data: updated_film,
+      });
+    } catch (err) {
+      res.status(500).json({ status: "error", mess: err });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ status: "error", mess: err });
+  }
+};
+
+
 exports.deleteFilm = async (req, res) => {
   try {
     const { id } = req.params;

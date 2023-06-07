@@ -2,13 +2,26 @@
     display: flex;
     gap: 10px;
     justify-content: center;
+    border: 1px solid var(--border-color);
+    background-color: var(--box-color);
+    padding: 15px;
+    margin: 15px auto 0 auto;
+    /* margin: 15px auto -45px auto; */
+}
+.NavContainer,
+.addFilmInner{
+    max-width: 500px;
+    border-radius: 5px;
 }
 .addFilmInner{
-    margin: 25px auto;
+    margin: 15px auto;
     background-color: var(--box-color);
-    max-width: 500px;
     padding: 20px;
     border: 1px solid var(--border-color);
+}
+.FilmsListInner{
+    margin-top: 15px;
+    overflow: scroll;
 }
 .addFilmContainer{
     margin-top: 25px;

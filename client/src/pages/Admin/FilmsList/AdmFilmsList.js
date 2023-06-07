@@ -3,7 +3,7 @@ import axios from "../../../axios";
 import FilmFilters from "../../../components/FilmFilters/FilmFilters";
 import AdmFilmsTable from "./AdmFilmsTable";
 import Pagination from "../../../components/Pagination/Pagination";
-
+import AdminCSS from "../Admin.module.css";
 const AdmFilmsList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [currPage, setCurrPage] = useState(1);
@@ -33,7 +33,7 @@ const AdmFilmsList = () => {
   }, [currPage, filters]);
 
   return (
-        <div className="main-inner mh-50vh">
+        <div className={`${AdminCSS.FilmsListInner} main-inner mh-50vh`}>
          <FilmFilters
             getFilms={getFilms}
             setFilms={setFilms}

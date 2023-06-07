@@ -65,6 +65,8 @@ export const errMessage = (type, field, value) => {
       errors.genres = errMessage("max_symbols", "Žanras", 20);
     }
 
+    
+
     if (!country) {
       errors.country = errMessage("required", "Šalis");
     } else if (country.length < 2) {
@@ -114,9 +116,6 @@ export const errMessage = (type, field, value) => {
     } else if (trailerID.length != 11) {
       errors.trailerID = `Trailer id turi būti sudarytas iš 11 simbolių!`;
     }
-
-
-    
 
     return errors;
   };
