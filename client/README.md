@@ -28,7 +28,11 @@ KinoFlix - Geriausi filmai vienoje vietoje!
       cd app
       npm i
       npm start
-
+      
+***********
+Admin
+    Slapyvardis: Admin
+    Slaptažodis: 1234567
 ```
 
 
