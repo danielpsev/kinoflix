@@ -44,9 +44,8 @@ export const errMessage = (type, field, value) => {
       errors.title = errMessage("min_symbols", "Pavadinimas", 2);
     } else if (title.length > 40) {
       errors.title = errMessage("max_symbols", "Pavadinimas", 40);
-    } else if (!/^[a-zA-Z0-9 ]+$/.test(title)) {
-      errors.title =
-        "Pavadinimas turi būti sudarytas tik iš lotyniškų raidžių ir skaičių!";
+    } else if (!/^[a-zA-Z0-9 .,:-]+$/.test(title)) {
+      errors.title = "Pavadinimas gali būti sudarytas tik iš lotyniškų raidžių, skaičių, taškų, kablelių ir dvitaškių!";
     }
 
     if (!description) {
@@ -82,7 +81,7 @@ export const errMessage = (type, field, value) => {
       errors.director = errMessage("required", "Režisierius");
     } else if (director.length < 2) {
       errors.director = errMessage("min_symbols", "Režisierius", 2);
-    } else if (director.length > 15) {
+    } else if (director.length > 20) {
       errors.director = errMessage("max_symbols", "Režisierius", 20);
     }
 

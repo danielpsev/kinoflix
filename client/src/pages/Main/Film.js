@@ -23,7 +23,7 @@ export default function Film(props) {
         <h3 className={MainCSS.MainFilmContainer__infoContainer__title} title={title}>{title_sub}</h3>
         <h4 className={MainCSS.MainFilmContainer__infoContainer__details}> {country} | {releaseYear}</h4>
          
-         {like && auth.user ? <AiFillHeart onClick={() => dislikeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.filledHeart}`}/> : <AiOutlineHeart onClick={() => likeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.notFilledHeart}`}/>
+         {like && auth.user ? <AiFillHeart onClick={() => dislikeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.filledHeart}`} title="Pašalinti"/> : <AiOutlineHeart onClick={() => likeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.notFilledHeart}`} title="Išsaugoti"/>
         }
         
         </div>

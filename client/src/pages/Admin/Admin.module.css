@@ -99,7 +99,9 @@
     padding: 1px;
     height: 30px;
 }
-
+.errorMessBox{
+    width: 100%;
+}
 /*AdmFilmsList*/
 .tableImg{
     width: 50px;
