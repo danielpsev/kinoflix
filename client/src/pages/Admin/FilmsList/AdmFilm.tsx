@@ -20,7 +20,7 @@ export default function AdmFilm(props : IPropsAdmFilm) {
     const description_sub = description.length > 50 ? description.substring(0, 50) + "...": description;
     return (
     <tr>
-        <td><img src={posterSrc.substr(0, 4) == 'http' ? posterSrc : '../' + posterSrc} alt={title} className={`${AdminCSS.tableImg} pointer`} onClick={() => navigate(`/film/${_id}`)}/></td>
+        <td><img src={posterSrc.substr(0, 4) === 'http' ? posterSrc : '../' + posterSrc} alt={title} className={`${AdminCSS.tableImg} pointer`} onClick={() => navigate(`/film/${_id}`)}/></td>
         <td>{title_sub}</td>
         <td className={AdminCSS.hideOnMobile}>{description_sub}</td>
         <td>{duration}</td>

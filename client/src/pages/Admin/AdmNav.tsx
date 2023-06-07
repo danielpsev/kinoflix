@@ -10,7 +10,7 @@ const AdmNav : React.FC<IAdmNavProps> = (props) => {
         <nav className={AdminCSS.NavContainer}>
           <button
             className={
-              showPage == "films_list"
+              showPage === "films_list"
                 ? "Admin-nav-item btn btn-success"
                 : "Admin-nav-item btn btn-primary"
             }
@@ -20,7 +20,7 @@ const AdmNav : React.FC<IAdmNavProps> = (props) => {
           </button>
           <button
             className={
-              showPage == "add_film"
+              showPage === "add_film"
                 ? "Admin-nav-item btn btn-success"
                 : "Admin-nav-item btn btn-primary"
             }

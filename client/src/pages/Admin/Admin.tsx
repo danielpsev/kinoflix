@@ -15,7 +15,7 @@ const Admin = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const type = searchParams.get("type");
-    if (type == "films_list" || type == "add_film") {
+    if (type === "films_list" || type === "add_film") {
       setShowPage(type);
     }
   }, [location.search]);
@@ -23,8 +23,8 @@ const Admin = () => {
     <main>
       <div className="wrapper">
         <AdmNav funcShowPage={funcShowPage} showPage={showPage} />
-        {showPage == "films_list" ? <AdmFilmsList /> : null}
-        {showPage == "add_film" ? <AdmAddFilm /> : null}
+        {showPage === "films_list" ? <AdmFilmsList /> : null}
+        {showPage === "add_film" ? <AdmAddFilm /> : null}
       </div>
     </main>
   );

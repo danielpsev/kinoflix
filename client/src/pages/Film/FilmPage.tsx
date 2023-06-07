@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import FilmCSS from "./Film.module.css";
 import axios from "../../axios";
@@ -20,19 +19,20 @@ import IFilm from "../../interfaces/IFilm";
   const location = useLocation();
   const path:string = location.pathname.split("/")[2];
   const [like, setLike] = useState<boolean>(false);
+  const getFilm = async () => {
+    try {
+      const res = await axios.get("/films/" + path);
+      setFilm(res.data);
+      setLike(res.data.isLiked);
+      setIsLoading(false);
+    } catch (err : any) {
+      toast.error(err.response.data.mess);
+      navigate('/');
+    }
+  }
   useEffect(() => {
     setIsLoading(true);
-    const getFilm = async () => {
-      try {
-        const res = await axios.get("/films/" + path);
-        setFilm(res.data);
-        setLike(res.data.isLiked);
-        setIsLoading(false);
-      } catch (err : any) {
-        toast.error(err.response.data.mess);
-        navigate('/');
-      }
-    };
+    
     getFilm();
   }, [path, auth.user]);
 
@@ -62,7 +62,7 @@ import IFilm from "../../interfaces/IFilm";
     <main>
       <style>
         {`.App::before {
-          background-image: url(${bgSrc && bgSrc.substr(0, 4) == 'http' ? bgSrc : '../' + bgSrc}) !important;
+          background-image: url(${bgSrc && bgSrc.substr(0, 4) === 'http' ? bgSrc : '../' + bgSrc}) !important;
           background-size: cover;
         }`}
       </style>
@@ -86,7 +86,7 @@ import IFilm from "../../interfaces/IFilm";
                     <img
                       className={FilmCSS.FilmContainer__img}
                       alt="poster"
-                      src={posterSrc.substr(0, 4) == 'http' ? posterSrc : '../' + posterSrc}
+                      src={posterSrc.substr(0, 4) === 'http' ? posterSrc : '../' + posterSrc}
                       // src={posterSrc}
                       // ${bgSrc.substr(0, 3) == 'http' ? bgSrc : '../'+bgSrc+''}
                     />

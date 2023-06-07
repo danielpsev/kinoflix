@@ -30,7 +30,7 @@ export default function TrailerInfoModal(props : IPropsTrailerInfoModal) {
                 </span>
               </div>
               <div className="modal-data">
-                <h3 className="text-color-second mt-10"><span className="acc-color">1.</span> Užeikite į <a href="https://www.youtube.com" target="_blank"><u>YouTube</u></a> puslapį. </h3>
+                <h3 className="text-color-second mt-10"><span className="acc-color">1.</span> Užeikite į <a href="https://www.youtube.com" target="_blank" rel="noreferrer"><u>YouTube</u></a> puslapį. </h3>
                 <h3 className="text-color-second mt-10"><span className="acc-color">2.</span> Susiraskite norimo filmo trailer'į.</h3>
                 <h3 className="text-color-second mt-10"><span className="acc-color">3.</span> Nukopijuokite 11 simbolių kodą esantį nuorodoje po ?v=</h3>
                 <img className="mt-10" src={trailerIdTutorial} width="100%"/>
