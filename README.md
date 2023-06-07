@@ -51,9 +51,13 @@ Filmai
 ![App Screenshot](https://i.imgur.com/7tInrA1.png)
 Filmas
 ![App Screenshot](https://i.imgur.com/4hnSNCc.png)
-Filmo Pridėjimas
+
+#
+Admin. Filmų sąrašas
+![App Screenshot](https://i.imgur.com/C6UjWDl.png)
+Admin. Filmo Pridėjimas
 ![App Screenshot](https://i.imgur.com/v0IT30N.png)
-Filmo Redagavimas
+Admin .Filmo Redagavimas
 ![App Screenshot](https://i.imgur.com/yGa9zDm.jpg)
 
 
