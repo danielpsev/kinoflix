@@ -11,7 +11,7 @@ const Admin = () => {
 
   const funcShowPage = (title) => {
     setShowPage(title);
-    navigate("?type=" + title, { replace: true }); 
+    navigate("?type=" + title, { replace: true });
   };
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -23,10 +23,10 @@ const Admin = () => {
   return (
     <main>
       <div className="wrapper">
-          <AdmNav funcShowPage={funcShowPage} showPage={showPage}/>
-          {showPage == "films_list" ? <AdmFilmsList /> : null}
-          {showPage == "add_film" ? <AdmAddFilm /> : null}
-        </div>
+        <AdmNav funcShowPage={funcShowPage} showPage={showPage} />
+        {showPage == "films_list" ? <AdmFilmsList /> : null}
+        {showPage == "add_film" ? <AdmAddFilm /> : null}
+      </div>
     </main>
   );
 };

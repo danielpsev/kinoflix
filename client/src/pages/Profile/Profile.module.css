@@ -1,7 +1,6 @@
 .ProfileTitle{
     font-size: 1.2em;
+    margin: 20px 0px;
+    text-align: left;
     color: var(--text-color__title);
-}
-.ProfileFilmsList{
-    
 }
