@@ -10,14 +10,12 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.MainTopContainer{
-    /* margin-top: 20px; */
-}
 .FilmListContainer{
     margin-top: 10px;
     /* display: flex; */
     /* flex-wrap: wrap; */
     /* gap: 20px; */
+    display: -ms-grid;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     /* grid-auto-rows: 200px; */
@@ -25,8 +23,13 @@
 }
 .MainFilmContainer{
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 100%;
     max-width: 250px;
     border: 1px solid var(--border-color);
@@ -34,7 +37,8 @@
 }
 .MainFilmContainer__img{
     width: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     height: 328px;
 }
 .MainFilmContainer__infoContainer{
@@ -59,6 +63,8 @@
     right: 15px;
     font-size: 2em;
     cursor: pointer;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
     transition: 0.2s;
 }
 .filledHeart{
@@ -72,16 +78,24 @@
 }
 .MainFilmContainer__overlay{
     position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     top: 0;
     left: 0;
     bottom:0;
     width: 100%;
     height: 328px;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     background-color: rgba(23, 26, 32, 0.95);
     cursor: pointer;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
     transition: 0.2s;
     opacity: 0;
 }

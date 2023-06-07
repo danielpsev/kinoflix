@@ -15,7 +15,7 @@ const Main: React.FC = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/films?page=${currPage}${filters}`);
-      if (res.data.status != "error") {
+      if (res.data.status !== "error") {
         setFilms(res.data.data.films);
         setTotalPages(res.data.data.totalPages);
       } else {
@@ -32,6 +32,7 @@ const Main: React.FC = () => {
   useEffect(() => {
     getFilms(filters);
   }, [currPage, filters]);
+  
   return (
     <main>
       <div className={MainCSS.Banner}></div>

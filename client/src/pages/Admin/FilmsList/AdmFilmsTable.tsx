@@ -27,7 +27,7 @@ export default function AdmFilmsTable(props : IPropsAdmFilmsTable) {
         confirmButtonText: "Ištrinti",
         cancelButtonText: "Atšaukti!",
       })
-      .then(async (result) => {
+      .then(async (result : any) => {
         if (result.isConfirmed) {
           try {
             const res = await axios.delete("/films/" + id);

@@ -1,7 +1,11 @@
 .NavContainer{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 10px;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     border: 1px solid var(--border-color);
     background-color: var(--box-color);
     padding: 15px;
@@ -28,8 +32,11 @@
     margin-bottom: 50px;
 }
 .addFilmContent{
+    display: -ms-grid;
     display: grid;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 .addFilm__title{
     font-size: 1.2em;
@@ -78,6 +85,8 @@
 }
 .addFilmForm .labelWithIcon,
 .editFilmForm .labelWithIcon{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 5px;
 }

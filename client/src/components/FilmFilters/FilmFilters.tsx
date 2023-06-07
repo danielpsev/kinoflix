@@ -19,9 +19,6 @@ const FilmFilters : React.FC<IPropsFilmFilters> = (props) => {
   const handleFilterValChange = (e : React.ChangeEvent<HTMLSelectElement>) : void => {
     setSortBy(e.target.value);
   };
-  // const handleSearchChange = (e : React.ChangeEvent<HTMLFormElement>) : void => {
-  //   setSearchInputVal(e.target.value);
-  // };
   const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchInputVal(e.target.value);
   };

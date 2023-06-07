@@ -106,7 +106,7 @@ export default function AdmEditFilm() {
       <style>
         {`.App::before {
           background-image: url(${
-            formik.values.bgSrc && formik.values.bgSrc.substr(0, 4) == "http"
+            formik.values.bgSrc && formik.values.bgSrc.substr(0, 4) === "http"
               ? formik.values.bgSrc
               : "../../../" + formik.values.bgSrc
           }) !important;
@@ -395,7 +395,7 @@ export default function AdmEditFilm() {
                     <img
                       className="mt-10"
                       src={
-                        formik.values.posterSrc.substr(0, 4) == "http"
+                        formik.values.posterSrc.substr(0, 4) === "http"
                           ? formik.values.posterSrc
                           : "../../../" + formik.values.posterSrc
                       }
@@ -430,7 +430,7 @@ export default function AdmEditFilm() {
                     <img
                       className="mt-10 object-fit-cover"
                       src={
-                        formik.values.bgSrc.substr(0, 4) == "http"
+                        formik.values.bgSrc.substr(0, 4) === "http"
                           ? formik.values.bgSrc
                           : "../../../" + formik.values.bgSrc
                       }

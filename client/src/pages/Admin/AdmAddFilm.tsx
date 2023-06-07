@@ -31,7 +31,7 @@ const AdmAddFilm = () => {
       duration,
       rating
     } = formik.values;
-    if (nextStep == 2) {
+    if (nextStep === 2) {
       const hasProperties =
         formik.errors.hasOwnProperty("title") ||
         formik.errors.hasOwnProperty("description") ||
@@ -42,7 +42,7 @@ const AdmAddFilm = () => {
       } else {
         toast.error(err_mess);
       }
-    } else if (nextStep == 3) {
+    } else if (nextStep === 3) {
       const hasProperties =
         formik.errors.hasOwnProperty("director") ||
         formik.errors.hasOwnProperty("releaseYear") ||
@@ -107,7 +107,7 @@ const AdmAddFilm = () => {
             className={AdminCSS.addFilmForm}
             onSubmit={formik.handleSubmit}
           >
-            {currStep == 1 ? (
+            {currStep === 1 ? (
               <>
                 <p>
                   <label className="text-color-second" htmlFor="title">
@@ -210,7 +210,7 @@ const AdmAddFilm = () => {
               </>
             ) : null}
 
-            {currStep == 2 ? (
+            {currStep === 2 ? (
               <>
                 <p>
                   <label className="text-color-second" htmlFor="director">
@@ -319,7 +319,7 @@ const AdmAddFilm = () => {
               </>
             ) : null}
 
-            {currStep == 3 ? (
+            {currStep === 3 ? (
               <>
                 <p>
                   <label className="text-color-second" htmlFor="posterSrc">
@@ -418,7 +418,7 @@ const AdmAddFilm = () => {
               </>
             ) : null}
 
-            {currStep == 2 || currStep == 3 ? (
+            {currStep === 2 || currStep === 3 ? (
               <button
                 type="button"
                 className={`${AdminCSS.addFilmBtn} btn btn-secondary btn-success float-left`}
@@ -427,7 +427,7 @@ const AdmAddFilm = () => {
                 Atgal
               </button>
             ) : null}
-            {currStep == 1 || currStep == 2 ? (
+            {currStep === 1 || currStep === 2 ? (
               <button
                 type="button"
                 className={`${AdminCSS.addFilmBtn} btn btn-primary float-right`}
@@ -438,7 +438,7 @@ const AdmAddFilm = () => {
                 Toliau
               </button>
             ) : null}
-            {currStep == 3 ? (
+            {currStep === 3 ? (
               <button
                 type="submit"
                 className={`${AdminCSS.addFilmBtn} btn btn-success float-right`}
