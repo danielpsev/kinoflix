@@ -36,6 +36,7 @@ KinoFlix - Geriausi filmai vienoje vietoje!
 ## Galimybės
 
 Vartotojas (user)
+- Gali ieškoti filmus
 - Gali pridėti ir šalinti filmus iš išsaugotų filmų sąrašo
 
 Administratorius (admin)
@@ -46,6 +47,8 @@ Administratorius (admin)
 
 ## Galerija
 
+Filmai
+![App Screenshot](https://i.imgur.com/7tInrA1.png)
 Filmas
 ![App Screenshot](https://i.imgur.com/4hnSNCc.png)
 Filmo Pridėjimas
