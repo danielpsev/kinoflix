@@ -4,8 +4,15 @@ import axios from "../../axios";
 import FilmFilters from "../../components/FilmFilters/FilmFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import MainCSS from "./Main.module.css";
-
+import { useAuth } from "../../context/Auth";
+type authType = {
+  user?: {
+    username: string;
+    role: string;
+  }; 
+};
 const Main: React.FC = () => {
+  const auth : authType = useAuth() || {};
   const [films, setFilms] = useState([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currPage, setCurrPage] = useState<number>(1);
@@ -31,7 +38,7 @@ const Main: React.FC = () => {
   };
   useEffect(() => {
     getFilms(filters);
-  }, [currPage, filters]);
+  }, [currPage, filters, auth.user]);
   
   return (
     <main>
