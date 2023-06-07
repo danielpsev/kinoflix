@@ -8,8 +8,6 @@ declare module 'react-spinners/*';
 declare module 'react-youtube';
 declare module 'formik';
 
-
-
 /* css */
 declare module "*.module.css"
 

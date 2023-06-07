@@ -1,5 +1,6 @@
 import axios from "./axios"
 import { toast } from "react-toastify";
+import {IPropsFilmValidation, IFilmValidationErrors} from "./interfaces/IFilm";
 export const likeFilm = async (id : string | undefined, setState : React.Dispatch<React.SetStateAction<boolean>>) => {
         setState(true);
         try{
@@ -35,32 +36,6 @@ export const errMessage = (type : string, field : string, value ?: string | numb
     return mess;
   };
 
-  interface IPropsFilmValidation{
-    title ?: string, 
-    description ?:string, 
-    genres ?: string | Array<string>, 
-    country ?: string, 
-    director ?: string, 
-    releaseYear ?: number, 
-    duration ?: number,
-    rating ?: number, 
-    posterSrc ?: string, 
-    bgSrc ?: string, 
-    trailerID ?: string
-  }
-  interface IFilmValidationErrors{
-    title ?: string, 
-    description ?:string, 
-    genres ?: string,
-    country ?: string, 
-    director ?: string, 
-    releaseYear ?: string, 
-    duration ?: string,
-    rating ?: string, 
-    posterSrc ?: string, 
-    bgSrc ?: string, 
-    trailerID ?: string
-  }
   export const filmValidation = (values : IPropsFilmValidation) => {
     let errors : IFilmValidationErrors = {};
     const { title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID} = values;
