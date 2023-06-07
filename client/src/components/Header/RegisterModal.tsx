@@ -4,11 +4,29 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { useAuth } from "../../context/Auth";
-export default function RegisterModal(props) {
+interface IPropsRegisterModal{
+  registerModal: boolean;
+  setRegisterModal: React.Dispatch<React.SetStateAction<boolean>>
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+interface IErrorsValues{
+  username ?: string;
+  email ?: string;
+  password ?: string;
+  password_repeat ?: string;
+}
+interface ISubmitRegisterValues{
+  username : string;
+  email : string;
+  password : string;
+  password_repeat : string;
+}
+
+  const RegisterModal : React.FC<IPropsRegisterModal> = (props) =>{
   const { registerModal, setRegisterModal, setLoginModal } = props;
-  const auth = useAuth();
-  const validate = (values) => {
-    let errors = {};
+  const auth = useAuth() || { user: null, login: (data : object) => {} };
+  const validate = (values : IErrorsValues) => {
+    let errors : IErrorsValues= {};
     const { username, email, password, password_repeat } = values;
     if (!username) {
       errors.username = "Prašome užpildyti laukelį (Slapyvardis)";
@@ -47,7 +65,7 @@ export default function RegisterModal(props) {
     return errors;
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values : ISubmitRegisterValues) => {
     try {
       let { username, email, password, password_repeat } = values;
       const res = await axios.post("/auth/register", {
@@ -60,7 +78,7 @@ export default function RegisterModal(props) {
       auth.login(res.data.data);
       closeModal();
       toast.success("Paskyra sėkmingai sukurta");
-    } catch (err) {
+    } catch (err : any) {
       toast.error(err.response.data.mess);
     }
   };
@@ -77,7 +95,7 @@ export default function RegisterModal(props) {
   });
 
   // Modal close on background click
-  const modalOnMouseDown = (e) => {
+  const modalOnMouseDown = (e : React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
     }
@@ -206,3 +224,5 @@ export default function RegisterModal(props) {
     </>
   );
 }
+
+export default RegisterModal;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../axios";
 import AdmNav from "./AdmNav";
 import AdmAddFilm from "./AdmAddFilm";
 import AdmFilmsList from "./FilmsList/AdmFilmsList";
@@ -9,7 +8,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const funcShowPage = (title) => {
+  const funcShowPage = (title : string) : void => {
     setShowPage(title);
     navigate("?type=" + title, { replace: true });
   };

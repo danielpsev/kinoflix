@@ -4,23 +4,32 @@ import {
   AiOutlineSortAscending,
   AiOutlineSortDescending,
 } from "react-icons/ai";
-const FilmFilters = (props) => {
+
+interface IPropsFilmFilters {
+  setFilters: React.Dispatch<React.SetStateAction<string>>,
+  setCurrPage: React.Dispatch<React.SetStateAction<number>>
+}
+const FilmFilters : React.FC<IPropsFilmFilters> = (props) => {
+// const FilmFilters = (props) => {
   const { setFilters, setCurrPage } = props;
   const [searchInputVal, setSearchInputVal] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [order, setOrder] = useState("desc");
 
-  const handleFilterValChange = (e) => {
+  const handleFilterValChange = (e : React.ChangeEvent<HTMLSelectElement>) : void => {
     setSortBy(e.target.value);
   };
-  const handleSearchChange = (e) => {
+  // const handleSearchChange = (e : React.ChangeEvent<HTMLFormElement>) : void => {
+  //   setSearchInputVal(e.target.value);
+  // };
+  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchInputVal(e.target.value);
   };
   useEffect(() => {
     handleFiltersChange();
   }, [order, sortBy]);
 
-  const handleFiltersChange = async (reset) => {
+  const handleFiltersChange = async (reset ?: string) => {
     const filters = !reset
       ? `&sort_name=${sortBy}&sort_type=${order}&title=${searchInputVal}`
       : "";
@@ -28,11 +37,11 @@ const FilmFilters = (props) => {
     setCurrPage(1);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) : void => {
     e.preventDefault();
     handleFiltersChange();
   };
-  const resetFilters = () => {
+  const resetFilters = () : void => {
     setSortBy("");
     setSearchInputVal("");
     handleFiltersChange("reset");
@@ -72,7 +81,7 @@ const FilmFilters = (props) => {
               className={FilmFiltersCSS.FilterAscDescBtn}
             />
           </span>
-        )}{" "}
+        )}
         <input
           type="text"
           className={`${FilmFiltersCSS.searchInput}`}

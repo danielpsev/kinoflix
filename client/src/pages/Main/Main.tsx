@@ -4,13 +4,14 @@ import axios from "../../axios";
 import FilmFilters from "../../components/FilmFilters/FilmFilters";
 import Pagination from "../../components/Pagination/Pagination";
 import MainCSS from "./Main.module.css";
-const Main = () => {
+
+const Main: React.FC = () => {
   const [films, setFilms] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currPage, setCurrPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState("");
-  const getFilms = async (page, filters) => {
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currPage, setCurrPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [filters, setFilters] = useState<string>("");
+  const getFilms = async (filters : string) => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/films?page=${currPage}${filters}`);
@@ -29,7 +30,7 @@ const Main = () => {
     }
   };
   useEffect(() => {
-    getFilms(currPage, filters);
+    getFilms(filters);
   }, [currPage, filters]);
   return (
     <main>
@@ -38,20 +39,15 @@ const Main = () => {
         <div className={`main-inner ${MainCSS.MainInner}`}>
 
           <FilmFilters
-            getFilms={getFilms}
-            setFilms={setFilms}
             setFilters={setFilters}
             setCurrPage={setCurrPage}
           />
           <FilmsList
-            getFilms={getFilms}
             films={films}
-            setFilms={setFilms}
             isLoading={isLoading}
           />
           <Pagination
             totalPages={totalPages}
-            setTotalPages={setTotalPages}
             currPage={currPage}
             setCurrPage={setCurrPage}
           />

@@ -1,6 +1,10 @@
 import React from "react";
 import AdminCSS from './Admin.module.css';
-const AdmNav = (props) => {
+interface IAdmNavProps {
+  funcShowPage: (title: string) => void;
+  showPage: string
+}
+const AdmNav : React.FC<IAdmNavProps> = (props) => {
   const {funcShowPage, showPage} = props;
   return (
         <nav className={AdminCSS.NavContainer}>

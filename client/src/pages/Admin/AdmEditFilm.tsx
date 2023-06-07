@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import FilmCSS from "../Film/Film.module.css";
 import axios from "../../axios";
@@ -10,12 +9,11 @@ import { useNavigate } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
 import TrailerInfoModal from "./TrailerInfoModal";
 import YouTube from "react-youtube";
-import { filmValidation } from "../../func.js";
+import { filmValidation } from "../../func";
 import { useFormik } from "formik";
 import AdminCSS from "./Admin.module.css";
-import AdmNav from "./AdmNav";
 export default function AdmEditFilm() {
-  const [trailerInfoModal, setTrailerInfoModal] = useState(false);
+  const [trailerInfoModal, setTrailerInfoModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,7 +51,7 @@ export default function AdmEditFilm() {
           trailerID,
         });
         setIsLoading(false);
-      } catch (err) {
+      } catch (err : any) {
         toast.error(err.response.data.mess);
         // navigate('/');
       }
@@ -61,17 +59,17 @@ export default function AdmEditFilm() {
     getFilm();
   }, [path]);
 
-  const validate = (values) => {
+  const validate = (values : object) => {
     let errors = filmValidation(values);
     return errors;
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values : object) => {
     try {
       const res = await axios.patch("/films/" + path, values);
       toast.success("Filmas sėkmingai atnaujintas");
       navigate("/admin/?type=films_list", { replace: true });
-    } catch (err) {
+    } catch (err : any) {
       console.log(err);
       console.log(err.response.data.mess);
       toast.error(`Klaida. ${err.response.data.mess}`);
@@ -195,7 +193,7 @@ export default function AdmEditFilm() {
                       id="description"
                       name="description"
                       placeholder="Filmo aprašymas"
-                      rows="4"
+                      rows={4}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.description}

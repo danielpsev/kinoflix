@@ -3,10 +3,19 @@ import Film from "./Film";
 import MainCSS from "./Main.module.css";
 import { v4 as uuidv4 } from "uuid";
 import BeatLoader from "react-spinners/BeatLoader";
-export default function FilmsList(props) {
+import IFilm from "../../interfaces/IFilm";
+
+
+interface IPropsFilmList{
+  films : Array<string>
+  isLoading: boolean
+}
+
+export default function FilmsList(props : IPropsFilmList) {
   const {films, isLoading } = props;
   let films_render = films.map((el) => {
-    return <Film obj={el} key={uuidv4()} />;
+    const filmObj: IFilm = el as unknown as IFilm;
+    return <Film obj={filmObj} key={uuidv4()} />;
   });
   return (
     <>

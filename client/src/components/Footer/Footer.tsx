@@ -1,6 +1,7 @@
+import React from 'react';
 import creatorLogo from '../../assets/images/daniel.png';
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <footer className="footer">
         <div className="wrapper">

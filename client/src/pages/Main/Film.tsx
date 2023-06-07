@@ -4,14 +4,20 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {BsFillPlayCircleFill} from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import '../../style/main.css'; 
-import { likeFilm, dislikeFilm } from "../../func.js";
+import { likeFilm, dislikeFilm } from "../../func";
 import { useAuth } from "../../context/Auth";
-export default function Film(props) {
+import IFilm from "../../interfaces/IFilm"; 
+interface IPropsFilm{
+    obj: IFilm,
+}
+
+const Film: React.FC<IPropsFilm> = (props) =>{
+// export default function Film(props: IPropsFilm) {
     const navigate = useNavigate();
-    const auth = useAuth();
+    const auth = useAuth() ?? { user: null };
     const {obj} = props;
     const {_id, title, country, releaseYear, posterSrc, isLiked} = obj;
-    const [like, setLike] = useState(isLiked);
+    const [like, setLike] = useState<boolean>(isLiked as boolean);
 
     const title_sub = title.length > 18 ? title.substring(0, 18) + "...": title;
     return (
@@ -31,3 +37,5 @@ export default function Film(props) {
     </div>
     );
 }
+
+export default Film;

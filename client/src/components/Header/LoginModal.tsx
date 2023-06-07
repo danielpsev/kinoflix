@@ -4,11 +4,26 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/Auth";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
-export default function LoginModal(props) {
+
+interface IPropsLoginModal{
+  loginModal: boolean;
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+  setRegisterModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+interface IErrorsValues{
+  username ?: string,
+  password ?: string
+}
+interface ISubmitLoginValues{
+  username : string;
+  password : string;
+}
+const LoginModal : React.FC<IPropsLoginModal> = (props) =>{
   const { loginModal, setLoginModal, setRegisterModal } = props;
-  const auth = useAuth();
-  const validate = (values) => {
-    let errors = {};
+  // const auth = useAuth();
+  const auth = useAuth() || { user: null, login: (data : object) => {} };
+  const validate = (values : IErrorsValues) => {
+    let errors : IErrorsValues= {};
     const { username, password } = values;
     if (!username) {
       errors.username = "Prašome užpildyti laukelį (Slapyvardis)";
@@ -19,7 +34,7 @@ export default function LoginModal(props) {
     return errors;
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values : ISubmitLoginValues) => {
     try {
       let { username, password } = values;
       const res = await axios.post("/auth/login", {
@@ -30,7 +45,7 @@ export default function LoginModal(props) {
       auth.login(res.data.data);
       closeModal();
       toast.success("Sėkmingai prisijungei");
-    } catch (err) {
+    } catch (err : any) {
       toast.error(err.response.data.mess);
     }
   };
@@ -44,8 +59,10 @@ export default function LoginModal(props) {
     validate,
   });
 
+
+
   // Modal close on background click
-  const modalOnMouseDown = (e) => {
+  const modalOnMouseDown = (e : React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
     }
@@ -137,3 +154,5 @@ export default function LoginModal(props) {
     </>
   );
 }
+
+export default LoginModal;

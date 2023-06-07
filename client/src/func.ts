@@ -1,25 +1,25 @@
 import axios from "./axios"
 import { toast } from "react-toastify";
-export const likeFilm = async (id, setState) => {
+export const likeFilm = async (id : string | undefined, setState : React.Dispatch<React.SetStateAction<boolean>>) => {
         setState(true);
         try{
             const res = await axios.post("/films/like/" + id);
-          }catch(err){
+          }catch(err : any){
             setState(false);
             toast.error(err.response.data.mess);
           }
 }
-export const dislikeFilm = async (id, setState) => {
+export const dislikeFilm = async (id : string | undefined, setState : React.Dispatch<React.SetStateAction<boolean>>) => {
     setState(false);
     try{
       const res = await axios.delete("/films/like/" + id);
-    }catch(err){
+    }catch(err : any){
       setState(true);
       toast.error(err.response.data.mess);
     }
   }
 
-export const errMessage = (type, field, value) => {
+export const errMessage = (type : string, field : string, value ?: string | number) => {
     let mess = "Klaida";
     switch (type) {
       case "required":
@@ -35,8 +35,34 @@ export const errMessage = (type, field, value) => {
     return mess;
   };
 
-  export const filmValidation = (values) => {
-    let errors = {};
+  interface IPropsFilmValidation{
+    title ?: string, 
+    description ?:string, 
+    genres ?: string | Array<string>, 
+    country ?: string, 
+    director ?: string, 
+    releaseYear ?: number, 
+    duration ?: number,
+    rating ?: number, 
+    posterSrc ?: string, 
+    bgSrc ?: string, 
+    trailerID ?: string
+  }
+  interface IFilmValidationErrors{
+    title ?: string, 
+    description ?:string, 
+    genres ?: string,
+    country ?: string, 
+    director ?: string, 
+    releaseYear ?: string, 
+    duration ?: string,
+    rating ?: string, 
+    posterSrc ?: string, 
+    bgSrc ?: string, 
+    trailerID ?: string
+  }
+  export const filmValidation = (values : IPropsFilmValidation) => {
+    let errors : IFilmValidationErrors = {};
     const { title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID} = values;
     if (!title) {
       errors.title = errMessage("required", "Pavadinimas");
@@ -52,7 +78,7 @@ export const errMessage = (type, field, value) => {
       errors.description = errMessage("required", "Aprašymas");
     } else if (description.length < 2) {
       errors.description = errMessage("min_symbols", "Aprašymas", 2);
-    } else if (title.length > 4000) {
+    } else if (description.length > 4000) {
       errors.title = errMessage("max_symbols", "Aprašymas", 40);
     }
 

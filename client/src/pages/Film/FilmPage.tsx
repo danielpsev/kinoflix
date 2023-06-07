@@ -4,21 +4,22 @@ import { toast } from "react-toastify";
 import FilmCSS from "./Film.module.css";
 import axios from "../../axios";
 import { useLocation } from "react-router-dom";
-import { AiFillStar, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsFillPlayCircleFill } from "react-icons/bs";
+import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { likeFilm, dislikeFilm } from "../../func.js";
+import { likeFilm, dislikeFilm } from "../../func";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useAuth } from "../../context/Auth";
 import YouTube from "react-youtube";
-export default function FilmPage() {
-  const auth = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+import IFilm from "../../interfaces/IFilm";
+
+ const FilmPage: React.FC = () => {
+  const auth = useAuth() ?? {user: null};
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [film, setFilm] = useState({});
+  const [film, setFilm] = useState<IFilm | null>(null);
   const location = useLocation();
-  let path = location.pathname.split("/")[2];
-  const [like, setLike] = useState(false);
+  const path:string = location.pathname.split("/")[2];
+  const [like, setLike] = useState<boolean>(false);
   useEffect(() => {
     setIsLoading(true);
     const getFilm = async () => {
@@ -27,31 +28,33 @@ export default function FilmPage() {
         setFilm(res.data);
         setLike(res.data.isLiked);
         setIsLoading(false);
-      } catch (err) {
+      } catch (err : any) {
         toast.error(err.response.data.mess);
         navigate('/');
       }
     };
     getFilm();
   }, [path, auth.user]);
+
+
   const {
     _id,
     title,
     description,
-    genres,
+    genres = [],
     country,
     duration,
     releaseYear,
     rating,
-    posterSrc,
-    bgSrc,
+    posterSrc = 'img_placeholder.webp',
+    bgSrc = 'img_placeholder.webp',
     trailerID,
-  } = film;
+  } = film ?? {};
 
   const videoId = trailerID;
   const playerOptions = {
     playerVars: {
-      autoplay: 0,
+      autoplay: 0 as 0 | 1 | undefined, // Specify the type of autoplay
       mute: 1,
     },
   };
@@ -140,3 +143,4 @@ export default function FilmPage() {
     </main>
   );
 }
+export default FilmPage;
