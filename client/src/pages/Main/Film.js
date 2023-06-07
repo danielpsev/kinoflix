@@ -13,14 +13,14 @@ export default function Film(props) {
     const {_id, title, country, releaseYear, posterSrc, isLiked} = obj;
     const [like, setLike] = useState(isLiked);
 
-    const title_sub = title.length > 14 ? title.substring(0, 14) + "...": title;
+    const title_sub = title.length > 18 ? title.substring(0, 18) + "...": title;
     return (
     <div className={MainCSS.MainFilmContainer}>
         <img className={MainCSS.MainFilmContainer__img} src={posterSrc} alt={title}/>
         <div onClick={() => navigate(`/film/${_id}`)} className={MainCSS.MainFilmContainer__overlay}><BsFillPlayCircleFill className={MainCSS.MainFilmContainer__overlay__playIcon}/></div>
         <div className={MainCSS.MainFilmContainer__ratingBox}></div>
         <div className={MainCSS.MainFilmContainer__infoContainer}>
-        <h3 className={MainCSS.MainFilmContainer__infoContainer__title}>{title_sub}</h3>
+        <h3 className={MainCSS.MainFilmContainer__infoContainer__title} title={title}>{title_sub}</h3>
         <h4 className={MainCSS.MainFilmContainer__infoContainer__details}> {country} | {releaseYear}</h4>
          
          {like && auth.user ? <AiFillHeart onClick={() => dislikeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.filledHeart}`}/> : <AiOutlineHeart onClick={() => likeFilm(_id, setLike)} className={`${MainCSS.MainFilmContainer__infoContainer__heart}  ${MainCSS.notFilledHeart}`}/>

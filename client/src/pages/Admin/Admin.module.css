@@ -8,6 +8,7 @@
     background-color: var(--box-color);
     max-width: 500px;
     padding: 20px;
+    border: 1px solid var(--border-color);
 }
 .addFilmContainer{
     margin-top: 25px;
@@ -34,24 +35,57 @@
 }
 .addFilmForm input,
 .addFilmForm textarea{
+    width: 350px;
+}
+.editFilmForm input,
+.editFilmForm textarea{
+    width: 100%;
+}
+.addFilmForm input,
+.addFilmForm textarea,
+.editFilmForm input,
+.editFilmForm textarea{
     display: block;
     margin-top: 10px;
-    width: 350px;
     background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
 }
-.addFilmForm label{
+.addFilmForm label,
+.editFilmForm label{
     display: block;
     margin-top: 15px;
     font-weight: 600;
 }
-.addFilmForm .addFilmBtn{
+.addFilmForm .addFilmBtn,
+.editFilmForm .editFilmSaveBtn{
     margin-top: 20px;
 }
-.addFilmForm .labelWithIcon{
+.editFilmForm .editFilmSaveBtn{
+    width: 200px;
+}
+.addFilmForm .labelWithIcon,
+.editFilmForm .labelWithIcon{
     display: flex;
     gap: 5px;
 }
 
+
+.editFilmForm{
+    margin: 25px auto;
+    width: 90%;
+}
+.editFilmTitle{
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px;
+}
+.editFilmBackBtn{
+    margin-top: 10px;
+    margin: 15px auto;
+    display: block;
+    padding: 1px;
+    height: 30px;
+}
 
 /*AdmFilmsList*/
 .tableImg{

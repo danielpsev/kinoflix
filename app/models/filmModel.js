@@ -19,6 +19,7 @@ const filmSchema = mongoose.Schema(
             type: String,
             minLength: 2,
             maxLength: 4000,
+            trim: true,
             required: true,
         },
         country: {

@@ -96,7 +96,7 @@ const FilmFilters = (props) => {
           {sortBy || searchInputVal ? (
             <button
               type="button"
-              className={`btn btn-error`}
+              className={`${FilmFiltersCSS.FilterResetBtn} btn btn-error`}
               onClick={() => resetFilters()}
             >
               Atstatyti

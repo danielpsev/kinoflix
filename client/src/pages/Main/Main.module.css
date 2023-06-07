@@ -1,7 +1,10 @@
 
+.MainInner{
+    margin-top: 0px;
+}
 .Banner{
     width: 100%;
-    height: 200px;
+    height: 300px;
     background-image: url(../../assets/images/kinoflix_banner5.png);
     background-size: cover;
     background-position: center;
@@ -103,6 +106,9 @@
 
 /* mobile */
 @media screen and (max-width: 767px){
+    .MainInner{
+        margin-top: 50px;
+    }
     .Banner{
         display: none;
     }

@@ -1,3 +1,12 @@
+.FiltersContainer{
+    padding: 10px 0px 10px 0px;
+}
+.FiltersContainer form{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 .searchInput:focus{
     border: 2px solid var(--acc-color);
 }
@@ -7,18 +16,19 @@
     border: 2px solid var(--border-color);
 }
 
+.searchInput,
+.FilterDropdown{
+    flex-grow: 5;
+}
 
-.FiltersContainer{
-    padding: 10px 0px 10px 0px;
-  }
   .SearchBtn{
     width: 200px;
+    flex-grow: 1;
   }
-  .FiltersContainer form{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .FilterResetBtn{
+    flex-grow: 1;
   }
+
   .FilterDropdown:focus{
     border: 2px solid var(--acc-color);
   }

@@ -33,9 +33,10 @@ const Main = () => {
   }, [currPage, filters]);
   return (
     <main>
+      <div className={MainCSS.Banner}></div>
       <div className="wrapper">
-        <div className="main-inner">
-        <div className={MainCSS.Banner}></div>
+        <div className={`main-inner ${MainCSS.MainInner}`}>
+
           <FilmFilters
             getFilms={getFilms}
             setFilms={setFilms}

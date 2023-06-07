@@ -1,89 +1,143 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import FilmCSS from "../Film/Film.module.css";
 import axios from "../../axios";
-import AdminCSS from "./Admin.module.css";
-import { useFormik } from "formik";
+import { useLocation } from "react-router-dom";
 import { AiFillWarning } from "react-icons/ai";
 import {BsFillPatchQuestionFill} from "react-icons/bs";
-import TrailerInfoModal from "./TrailerInfoModal";
-import {filmValidation } from "../../func";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const AdmAddFilm = () => {
-  const [trailerInfoModal, setTrailerInfoModal] = useState(false);
-  const [currStep, setCurrStep] = useState(1);
+import BeatLoader from "react-spinners/BeatLoader";
+import TrailerInfoModal from "./TrailerInfoModal";
+import YouTube from "react-youtube";
+import { filmValidation } from "../../func.js";
+import { useFormik } from "formik";
+import AdminCSS from "./Admin.module.css"
+export default function AdmEditFilm() {
+    const [trailerInfoModal, setTrailerInfoModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+  let path = location.pathname.split("/")[4];
+  useEffect(() => {
+    setIsLoading(true);
+    const getFilm = async () => {
+      try {
+        console.log(path);
+        const res = await axios.get("/films/" + path);
+        console.log(res.data);
+        const {
+            _id,
+            title,
+            description,
+            director,
+            genres,
+            country,
+            duration,
+            releaseYear,
+            rating,
+            posterSrc,
+            bgSrc,
+            trailerID,
+          } = res.data;
+          formik.setValues({
+            title,
+            description,
+            genres,
+            country,
+            director,
+            releaseYear,
+            duration,
+            rating,
+            posterSrc,
+            bgSrc,
+            trailerID,
+          });
+        setIsLoading(false);
+      } catch (err) {
+        toast.error(err.response.data.mess);
+        // navigate('/');
+      }
+    };
+    getFilm();
+  }, [path]);
+
   const validate = (values) => {
     let errors = filmValidation(values);
     return errors;
   };
 
-  const isReadyForNextStep = (nextStep) => {
-    const err_mess = 'Užpildykite visus laukelius ir ištaisykite klaidas prieš pereinant toliau!';
-      const { title, description, genres, country, director, releaseYear, duration, rating, posterSrc, bgSrc, trailerID} = formik.values;
-        if(nextStep == 2){
-          const hasProperties = formik.errors.hasOwnProperty("title") || formik.errors.hasOwnProperty("description") || formik.errors.hasOwnProperty("genres") || formik.errors.hasOwnProperty("country");
-          if(!hasProperties && title && description && genres && country){
-            setCurrStep(currStep + 1);
-          }else{
-            toast.error(err_mess);
-          }
-        }else if(nextStep == 3){
-          const hasProperties = formik.errors.hasOwnProperty("director") || formik.errors.hasOwnProperty("releaseYear") || formik.errors.hasOwnProperty("duration") || formik.errors.hasOwnProperty("rating");
-          if(!hasProperties && director && releaseYear && duration && rating){
-            setCurrStep(currStep + 1);
-          }else{
-            toast.error(err_mess);
-          }
-        }
-  }
 
   const onSubmit = async (values) => {
-    try {
-      const res = await axios.post("/films/", values);
-      formik.resetForm();
-      toast.success("Filmas sėkmingai sukurtas");
-      navigate("?type=films_list", { replace: true }); 
-    } catch (err) {
-      console.log(err);
-      console.log(err.response.data.mess);
-      toast.error(`Klaida. ${err.response.data.mess}`);
-    }
+    // try {
+    //   const res = await axios.post("/films/", values);
+    //   formik.resetForm();
+    //   toast.success("Filmas sėkmingai sukurtas");
+    //   navigate("?type=films_list", { replace: true }); 
+    // } catch (err) {
+    //   console.log(err);
+    //   console.log(err.response.data.mess);
+    //   toast.error(`Klaida. ${err.response.data.mess}`);
+    // }
   };
   const formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      genres: "",
-      country: "",
-      director: "",
-      releaseYear: "",
-      duration: "",
-      rating: "",
-      posterSrc: "img_placeholder.webp",
-      bgSrc: "img_placeholder.webp",
-      trailerID: ""
+        title: "",
+        description: "",
+        genres: "",
+        country: "",
+        director: "",
+        releaseYear: "",
+        duration: "",
+        rating: "",
+        posterSrc: "",
+        bgSrc: "",
+        trailerID: ""
     },
     onSubmit,
     validate,
-  });
+    });
+
+    const videoId = formik.values.trailerID;
+    const playerOptions = {
+      playerVars: {
+        autoplay: 0,
+        mute: 1,
+      },
+    };
+
   return (
-    <div className={`${AdminCSS.addFilmInner} mh-50vh`}>
-    <div className={AdminCSS.addFilmContainer}>
-      <div className={AdminCSS.addFilmContent}>
+    <main>
+      <style>
+        {`.App::before {
+          background-image: url(${formik.values.bgSrc && formik.values.bgSrc.substr(0, 4) == 'http' ? formik.values.bgSrc : '../../../' + formik.values.bgSrc}) !important;
+          background-size: cover;
+        }`}
+      </style>
+      <div className="wrapper">
       {trailerInfoModal ? <TrailerInfoModal trailerInfoModal={trailerInfoModal} setTrailerInfoModal={setTrailerInfoModal}/> : null}
-        <h3 className={`${AdminCSS.addFilm__title} text-color-second`}>
-          Filmo pridėjimas
-        </h3>
-        <h4 className={`${AdminCSS.addFilm__step} text-color-second`}>
-          Žingsnis <span className="acc-color">{currStep}</span> iš <span className="acc-color">3</span>
-        </h4>
-          <form
+        <div>
+          <div className={FilmCSS.FilmCover}>
+            {isLoading ? (
+              <BeatLoader
+                color="#3474eb"
+                margin={15}
+                size={40}
+                cssOverride={{
+                  textAlign: "center",
+                }}
+              />
+            ) : (
+              <>
+                <div className={FilmCSS.FilmCover__overlay}></div>
+                <h3 className={`${AdminCSS.editFilmTitle} text-color-second`}>Filmo redagavimas <button className={`${AdminCSS.editFilmBackBtn} btn btn-type-2 btn-secondary`}  onClick={() => navigate(`/admin/?type=films_list`)} title="Atgal">Atgal</button></h3>
+                <section className={FilmCSS.FilmContainer}>
+                <form
             noValidate
-            className={AdminCSS.addFilmForm}
+            className={AdminCSS.editFilmForm}
             onSubmit={formik.handleSubmit}
           >
-            {currStep == 1 ? (
-              <>
+
                 <p>
                   <label className="text-color-second" htmlFor="title">
                     Filmo pavadinimas
@@ -122,6 +176,7 @@ const AdmAddFilm = () => {
                   id="description"
                   name="description"
                   placeholder="Filmo aprašymas"
+                  rows="4"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.description}
@@ -180,11 +235,7 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.country}</span>
                   </div>
                 ) : null}
-              </>
-            ) : null}
 
-            {currStep == 2 ? (
-              <>
                 <p>
                   <label className="text-color-second" htmlFor="director">
                     Režisierius
@@ -289,13 +340,10 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.rating}</span>
                   </div>
                 ) : null}
-              </>
-            ) : null}
 
 
 
-  {currStep == 3 ? (
-              <>
+
                 <p>
                   <label className="text-color-second" htmlFor="posterSrc">
                   Filmo afišos nuoroda
@@ -321,7 +369,7 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.posterSrc}</span>
                   </div>
                 ) : null}
-              <img className="mt-10" src={formik.values.posterSrc} width="100px" alt="filmo afiša"/>
+              <img className="mt-10" src={formik.values.posterSrc.substr(0, 4) == 'http' ? formik.values.posterSrc : '../../../' + formik.values.posterSrc} width="100px" alt="filmo afiša"/>
                 <p>
                   <label className="text-color-second" htmlFor="bgSrc">
                     Filmo fono nuoroda
@@ -347,7 +395,7 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.bgSrc}</span>
                   </div>
                 ) : null}
-              <img className="mt-10 object-fit-cover" src={formik.values.bgSrc} width="100%" height="100px" alt="filmo fonas"/>
+              <img className="mt-10 object-fit-cover" src={formik.values.bgSrc.substr(0, 4) == 'http' ? formik.values.bgSrc : '../../../' + formik.values.bgSrc} width="100%" height="300px" alt="filmo fonas"/>
   <p>
                   <label className={`${AdminCSS.labelWithIcon} text-color-second`} htmlFor="trailerID">
                     Trailer id <BsFillPatchQuestionFill className="pointer" onClick={() => setTrailerInfoModal(true)}/>
@@ -373,42 +421,25 @@ const AdmAddFilm = () => {
                     <span>{formik.errors.trailerID}</span>
                   </div>
                 ) : null}
-
-              </>
-            ) : null}
-
-
-            {currStep == 2 || currStep == 3 ? (
-              <button
-                type="button"
-                className={`${AdminCSS.addFilmBtn} btn btn-secondary btn-success float-left`}
-                onClick={() => setCurrStep(currStep - 1)}
-              >
-                Atgal
-              </button>
-            ) : null}
-            {currStep == 1 || currStep == 2 ? (
-              <button
-                type="button"
-                className={`${AdminCSS.addFilmBtn} btn btn-primary float-right`}
-                onClick={() => {isReadyForNextStep(currStep + 1);}}
-              >
-                Toliau
-              </button>
-            ) : null}
-            {currStep == 3 ? <button
+<button
                 type="submit"
-                className={`${AdminCSS.addFilmBtn} btn btn-success float-right`}
+                className={`${AdminCSS.editFilmSaveBtn} btn btn-success float-right mt-10`}
               >
-                Pridėti
-              </button> : null}
+                Išsaugoti
+              </button>
+</form>
 
 
-          </form>
+                </section>
+                <div className={FilmCSS.FilmTrailerContainer}>
+                  <YouTube videoId={videoId} opts={playerOptions} />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
+    </main>
   );
-};
+}
 
-export default AdmAddFilm;

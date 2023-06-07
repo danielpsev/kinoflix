@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer.js';
 
 import Profile from './pages/Profile/Profile';
 import Admin from './pages/Admin/Admin';
+import AdmEditFilm from './pages/Admin/AdmEditFilm';
 import FilmPage from './pages/Film/FilmPage';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,7 +26,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
               <Route path="/" element={<Main />} />
               <Route path="/film/:filmid" element={<FilmPage />} />
-              <Route path="/Admin" element={<RequireAdmin><Admin/></RequireAdmin>} />
+              <Route path="/admin" element={<RequireAdmin><Admin/></RequireAdmin>} />
+              <Route path="/admin/film/edit/:filmid" element={<RequireAdmin><AdmEditFilm/></RequireAdmin>} />
 
               <Route path="/profile/" element={<RequireAuth><Profile/></RequireAuth>} />
             </Routes>
